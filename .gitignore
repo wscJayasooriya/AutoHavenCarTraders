@@ -25,6 +25,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+Migrations/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet Packages are never
 # committed
