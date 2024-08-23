@@ -37,11 +37,11 @@
             container = new SplitContainer();
             loadPanel = new Panel();
             cartPanel = new Panel();
+            btnPartClear = new Button();
+            btnPartPlaceOrder = new Button();
             carPartPanel = new Panel();
             btnCar = new Button();
             btnCarParts = new Button();
-            btnPartPlaceOrder = new Button();
-            btnPartClear = new Button();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -151,6 +151,33 @@
             cartPanel.Size = new Size(420, 661);
             cartPanel.TabIndex = 0;
             // 
+            // btnPartClear
+            // 
+            btnPartClear.BackColor = Color.FromArgb(77, 86, 86);
+            btnPartClear.Font = new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPartClear.ForeColor = Color.White;
+            btnPartClear.Location = new Point(5, 589);
+            btnPartClear.Name = "btnPartClear";
+            btnPartClear.Size = new Size(409, 61);
+            btnPartClear.TabIndex = 2;
+            btnPartClear.Text = "Clear";
+            btnPartClear.UseVisualStyleBackColor = false;
+            btnPartClear.Visible = false;
+            // 
+            // btnPartPlaceOrder
+            // 
+            btnPartPlaceOrder.BackColor = Color.FromArgb(52, 73, 94);
+            btnPartPlaceOrder.Font = new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPartPlaceOrder.ForeColor = Color.White;
+            btnPartPlaceOrder.Location = new Point(5, 522);
+            btnPartPlaceOrder.Name = "btnPartPlaceOrder";
+            btnPartPlaceOrder.Size = new Size(409, 68);
+            btnPartPlaceOrder.TabIndex = 1;
+            btnPartPlaceOrder.Text = "Place Order";
+            btnPartPlaceOrder.UseVisualStyleBackColor = false;
+            btnPartPlaceOrder.Visible = false;
+            btnPartPlaceOrder.Click += btnPartPlaceOrder_Click;
+            // 
             // carPartPanel
             // 
             carPartPanel.Location = new Point(5, 4);
@@ -185,32 +212,6 @@
             btnCarParts.Text = "Car Parts";
             btnCarParts.UseVisualStyleBackColor = false;
             btnCarParts.Click += btnCarParts_Click;
-            // 
-            // btnPartPlaceOrder
-            // 
-            btnPartPlaceOrder.BackColor = Color.FromArgb(52, 73, 94);
-            btnPartPlaceOrder.Font = new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPartPlaceOrder.ForeColor = Color.White;
-            btnPartPlaceOrder.Location = new Point(5, 522);
-            btnPartPlaceOrder.Name = "btnPartPlaceOrder";
-            btnPartPlaceOrder.Size = new Size(409, 68);
-            btnPartPlaceOrder.TabIndex = 1;
-            btnPartPlaceOrder.Text = "Place Order";
-            btnPartPlaceOrder.UseVisualStyleBackColor = false;
-            btnPartPlaceOrder.Visible = false;
-            // 
-            // btnPartClear
-            // 
-            btnPartClear.BackColor = Color.FromArgb(77, 86, 86);
-            btnPartClear.Font = new Font("Arial", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPartClear.ForeColor = Color.White;
-            btnPartClear.Location = new Point(5, 589);
-            btnPartClear.Name = "btnPartClear";
-            btnPartClear.Size = new Size(409, 61);
-            btnPartClear.TabIndex = 2;
-            btnPartClear.Text = "Clear";
-            btnPartClear.UseVisualStyleBackColor = false;
-            btnPartClear.Visible = false;
             // 
             // Form_Orders
             // 

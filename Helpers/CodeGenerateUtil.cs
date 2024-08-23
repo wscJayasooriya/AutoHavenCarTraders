@@ -75,5 +75,27 @@ namespace CarTraders.Helpers
                 }
             }
         }
+        public string GenerateOrderCode()
+        {
+            using (var dbContext = new ApplicationDBContext())
+            {
+                string prefix = "INV";
+                var car = dbContext.orderDetails
+                    .Where(c => c.OrderCode.StartsWith(prefix))
+                    .OrderByDescending(c => c.OrderCode)
+                    .FirstOrDefault();
+
+                if (car != null)
+                {
+                    int currentNumber = int.Parse(car.OrderCode.Substring(3)) + 1;
+                    return prefix + currentNumber.ToString("D5");
+                }
+                else
+                {
+                    return prefix + "00001";
+                }
+            }
+        }
+
     }
 }

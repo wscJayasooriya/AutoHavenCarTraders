@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using CarTraders.Migrations;
 using CarTraders.Model;
 using System;
@@ -19,6 +20,7 @@ namespace CarTraders
     {
         private Dictionary<Guid, int> cartItems = new Dictionary<Guid, int>();
         private List<CarParts> carParts = new List<CarParts>();
+        private CodeGenerateUtil generateUtil;
         public Form_Orders()
         {
             InitializeComponent();
@@ -26,6 +28,8 @@ namespace CarTraders
             loadPanel.VerticalScroll.Enabled = false;
             loadPanel.VerticalScroll.Visible = false;
             loadPanel.HorizontalScroll.Visible = false;
+            generateUtil = new CodeGenerateUtil();
+
 
             btnPartClear.Click += BtnPartClear_Click;
         }
@@ -756,6 +760,67 @@ namespace CarTraders
             btnPartPlaceOrder.Visible = false;
             carPartPanel.AutoScroll = false;
         }
+
+        private void btnPartPlaceOrder_Click(object sender, EventArgs e)
+        {
+            if (cartItems.Count == 0)
+            {
+                MessageBox.Show("Your cart is empty. Please add items to your cart before placing an order.", "Cart Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            using (var dbContext = new ApplicationDBContext())
+            {
+                var orderCode = generateUtil.GenerateOrderCode();
+                foreach (var item in cartItems)
+                {
+                    var carPart = carParts.First(cp => cp.Id == item.Key);
+
+                    // Create a new order detail
+                    var orderDetail = new OrderDetails
+                    {
+                        Id = Guid.NewGuid(),
+                        OrderCode = orderCode,
+                        CustomerCode = "CUST123",
+                        ItemCode = carPart.CarPartCode,
+                        ItemName = carPart.PartName,
+                        Price = carPart.Price,
+                        Quantity = item.Value,
+                        TotalAmount = carPart.Price * item.Value,
+                        PaidAmount = 0.0,
+                        ChangeAmount = 0.0,
+                        OrderStatus = "Pending",
+                        IsPayment = 0,
+                        IsApproved = 0,
+                        IsDelivered = 0,
+                        Is_active = 1,
+                        OrderDate = DateTime.Now,
+                        DeliveredDate = DateTime.Now.AddDays(5),
+                        ApprovedDate = DateTime.Now,
+                        ApprovedBy = "Admin"
+                    };
+
+                    // Add order to the database context
+                    dbContext.orderDetails.Add(orderDetail);
+
+                    //update car part stock
+                    carPart.Quantity -= item.Value;
+                    dbContext.carParts.Update(carPart);
+                }
+
+                // Save all the orders to the database
+                dbContext.SaveChanges();
+            }
+
+            // Clear the cart after placing the order
+            cartItems.Clear();
+            carPartPanel.Controls.Clear();
+            btnPartClear.Visible = false;
+            btnPartPlaceOrder.Visible = false;
+            carPartPanel.AutoScroll = false;
+
+            MessageBox.Show("Order placed successfully!", "Order Placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
+
 
 }
