@@ -43,7 +43,7 @@ namespace CarTraders
                         if (user.Password == hashedPassword)
                         {
                             Thread.Sleep(500);
-                            Dashboard dashboard = new Dashboard();
+                            Dashboard dashboard = new Dashboard(username);
                             dashboard.Show();
                             this.Hide();
                         }

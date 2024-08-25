@@ -27,6 +27,18 @@ namespace CarTraders.Data
         public DbSet<Users> users { get; set; }
         public DbSet<DefaultImage> defaultImage { get; set; }
         public DbSet<OrderDetails> orderDetails { get; set; }
+        public DbSet<OrderItemDetails> orderItemDetails { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderItemDetails>()
+                .HasOne(o => o.OrderDetails)
+                .WithMany(od => od.ItemDetails)
+                .HasForeignKey(o => o.OrderCode)
+                .HasPrincipalKey(od => od.OrderCode); // Specifies `OrderCode` as the principal key in `OrderDetails`
+
+            base.OnModelCreating(modelBuilder);
+        }
+
 
     }
 }

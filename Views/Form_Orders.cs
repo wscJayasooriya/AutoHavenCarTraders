@@ -18,10 +18,19 @@ namespace CarTraders
 {
     public partial class Form_Orders : Form
     {
-        private Dictionary<Guid, int> cartItems = new Dictionary<Guid, int>();
+        public class CarPartDetails
+        {
+            public int Quantity { get; set; }
+            public string PartName { get; set; }
+            public decimal Price { get; set; }
+            public Image PartImage { get; set; } // Optional, if you want to show the image on checkout
+        }
+
+        private Dictionary<Guid, CarPartDetails> cartItems = new Dictionary<Guid, CarPartDetails>();
         private List<CarParts> carParts = new List<CarParts>();
         private CodeGenerateUtil generateUtil;
-        public Form_Orders()
+        public string currentUser;
+        public Form_Orders(string username)
         {
             InitializeComponent();
             loadPanel.AutoScroll = true;
@@ -29,6 +38,7 @@ namespace CarTraders
             loadPanel.VerticalScroll.Visible = false;
             loadPanel.HorizontalScroll.Visible = false;
             generateUtil = new CodeGenerateUtil();
+            currentUser = username;
 
 
             btnPartClear.Click += BtnPartClear_Click;
@@ -263,7 +273,7 @@ namespace CarTraders
             using (var dbContext = new ApplicationDBContext())
             {
                 var carPartQuery = dbContext.carParts
-                    .Where(cp => cp.Status == 1); // Assuming you have a status or similar flag
+                    .Where(cp => cp.Status == 1 && cp.Quantity > 0);
                 var carPartsList = carPartQuery.ToList();
                 carParts = carPartsList;
 
@@ -589,13 +599,17 @@ namespace CarTraders
             // Check if the item is already in the cart
             if (cartItems.ContainsKey(part.Id))
             {
-                // Increment the quantity in the cart
-                cartItems[part.Id]++;
+                cartItems[part.Id].Quantity++;
             }
             else
             {
-                // Add the item to the cart with an initial quantity of 1
-                cartItems.Add(part.Id, 1);
+                cartItems.Add(part.Id, new CarPartDetails
+                {
+                    Quantity = 1,
+                    PartName = part.PartName,
+                    Price = (decimal)part.Price,
+                    PartImage = ByteArrayToImage(part.Image) // Assuming you have a method to convert byte array to image
+                });
             }
 
             // Clear the cart panel to refresh the display
@@ -605,8 +619,7 @@ namespace CarTraders
             int yPos = 10;
             foreach (var item in cartItems)
             {
-                var cartPart = carParts.First(cp => cp.Id == item.Key);
-                int quantity = item.Value;
+                CarPartDetails cartPart = item.Value;
 
                 // Create a new panel for the item
                 Panel itemPanel = new Panel
@@ -618,15 +631,8 @@ namespace CarTraders
 
                 // Create PictureBox for the car part image
                 PictureBox pictureBox = new PictureBox();
-                try
-                {
-                    pictureBox.Image = ByteArrayToImage(cartPart.Image);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading image for {cartPart.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    pictureBox.Image = null;
-                }
+
+                pictureBox.Image = cartPart.PartImage;
                 pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 pictureBox.Size = new Size(100, 100);
                 pictureBox.Location = new Point(10, 10);
@@ -666,7 +672,7 @@ namespace CarTraders
                 // Create a TextBox for the quantity, placed between the buttons
                 Button txtQuantity = new Button
                 {
-                    Text = quantity.ToString(),
+                    Text = cartPart.Quantity.ToString(),
                     Location = new Point(180, 70), // Positioned between btnDecrease and btnIncrease
                     Size = new Size(40, 40),
                     Font = new Font("Arial", 10, FontStyle.Regular),
@@ -688,23 +694,28 @@ namespace CarTraders
 
                 btnIncrease.Click += (s, args) =>
                 {
-                    int currentQuantity = int.Parse(txtQuantity.Text);
-                    if (currentQuantity < cartPart.Quantity) // Check if quantity is within available stock
+                    int currentQuantity;
+                    if (int.TryParse(txtQuantity.Text, out currentQuantity))
                     {
-                        currentQuantity++;
-                        txtQuantity.Text = currentQuantity.ToString();
-                        cartItems[cartPart.Id] = currentQuantity;
+                        if (currentQuantity < part.Quantity) // Assuming 99 is the max quantity
+                        {
+                            currentQuantity++;
+                            txtQuantity.Text = currentQuantity.ToString();
+                            cartItems[item.Key].Quantity = currentQuantity;
+                        }
                     }
                 };
-
                 btnDecrease.Click += (s, args) =>
                 {
-                    int currentQuantity = int.Parse(txtQuantity.Text);
-                    if (currentQuantity > 1) // Ensure quantity doesn't go below 1
+                    int currentQuantity;
+                    if (int.TryParse(txtQuantity.Text, out currentQuantity))
                     {
-                        currentQuantity--;
-                        txtQuantity.Text = currentQuantity.ToString();
-                        cartItems[cartPart.Id] = currentQuantity;
+                        if (currentQuantity > 1) // Ensure quantity doesn't go below 1
+                        {
+                            currentQuantity--;
+                            txtQuantity.Text = currentQuantity.ToString();
+                            cartItems[item.Key].Quantity = currentQuantity;
+                        }
                     }
                 };
 
@@ -723,7 +734,7 @@ namespace CarTraders
                 yPos += itemPanel.Height + 10;
 
                 // Disable the Add Cart button if quantity reaches the available stock
-                if (quantity >= cartPart.Quantity)
+                if (cartPart.Quantity >= cartPart.Quantity)
                 {
                     Button btnAddToCart = new Button
                     {
@@ -763,63 +774,10 @@ namespace CarTraders
 
         private void btnPartPlaceOrder_Click(object sender, EventArgs e)
         {
-            if (cartItems.Count == 0)
-            {
-                MessageBox.Show("Your cart is empty. Please add items to your cart before placing an order.", "Cart Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            using (var dbContext = new ApplicationDBContext())
-            {
-                var orderCode = generateUtil.GenerateOrderCode();
-                foreach (var item in cartItems)
-                {
-                    var carPart = carParts.First(cp => cp.Id == item.Key);
-
-                    // Create a new order detail
-                    var orderDetail = new OrderDetails
-                    {
-                        Id = Guid.NewGuid(),
-                        OrderCode = orderCode,
-                        CustomerCode = "CUST123",
-                        ItemCode = carPart.CarPartCode,
-                        ItemName = carPart.PartName,
-                        Price = carPart.Price,
-                        Quantity = item.Value,
-                        TotalAmount = carPart.Price * item.Value,
-                        PaidAmount = 0.0,
-                        ChangeAmount = 0.0,
-                        OrderStatus = "Pending",
-                        IsPayment = 0,
-                        IsApproved = 0,
-                        IsDelivered = 0,
-                        Is_active = 1,
-                        OrderDate = DateTime.Now,
-                        DeliveredDate = DateTime.Now.AddDays(5),
-                        ApprovedDate = DateTime.Now,
-                        ApprovedBy = "Admin"
-                    };
-
-                    // Add order to the database context
-                    dbContext.orderDetails.Add(orderDetail);
-
-                    //update car part stock
-                    carPart.Quantity -= item.Value;
-                    dbContext.carParts.Update(carPart);
-                }
-
-                // Save all the orders to the database
-                dbContext.SaveChanges();
-            }
-
-            // Clear the cart after placing the order
-            cartItems.Clear();
-            carPartPanel.Controls.Clear();
-            btnPartClear.Visible = false;
-            btnPartPlaceOrder.Visible = false;
-            carPartPanel.AutoScroll = false;
-
-            MessageBox.Show("Order placed successfully!", "Order Placed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Form_Checkout form_Checkout = new Form_Checkout(currentUser, cartItems);
+            form_Checkout.Show();
         }
+
     }
 
 

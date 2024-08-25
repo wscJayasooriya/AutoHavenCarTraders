@@ -16,14 +16,11 @@ namespace CarTraders.Model
         public Guid Id { get; set; }
         public string OrderCode { get; set; }
         public string CustomerCode { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public double Price { get; set; }
-        public int Quantity { get; set; }
-        public double TotalAmount { get; set; } = 0.0;
+        public double GrossAmount { get; set; } = 0.0;
         public double PaidAmount { get; set; } = 0.0;
         public double ChangeAmount { get; set; } = 0.0;
         public string OrderStatus { get; set; }
+        public virtual ICollection<OrderItemDetails> ItemDetails { get; set; } = new List<OrderItemDetails>();
         public int IsPayment { get; set; }
         public int IsApproved { get; set; }
         public int IsDelivered { get; set; }
