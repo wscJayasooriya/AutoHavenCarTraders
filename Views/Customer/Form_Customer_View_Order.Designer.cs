@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dataGridView = new DataGridView();
             TLPanelTop = new TableLayoutPanel();
             panel1 = new Panel();
             loadPanel = new Panel();
             btnCompleteOrder = new Button();
             btnPendingOrder = new Button();
-            completeOrderCount = new Label();
             pendingOrderCount = new Label();
-            label1 = new Label();
-            label2 = new Label();
+            completeOrderCount = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             TLPanelTop.SuspendLayout();
             loadPanel.SuspendLayout();
@@ -54,14 +52,14 @@
             dataGridView.BorderStyle = BorderStyle.None;
             dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.Location = new Point(18, 34);
@@ -115,7 +113,7 @@
             btnCompleteOrder.Cursor = Cursors.Hand;
             btnCompleteOrder.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCompleteOrder.ForeColor = Color.White;
-            btnCompleteOrder.Location = new Point(333, 83);
+            btnCompleteOrder.Location = new Point(378, 85);
             btnCompleteOrder.Name = "btnCompleteOrder";
             btnCompleteOrder.Size = new Size(342, 60);
             btnCompleteOrder.TabIndex = 13;
@@ -129,7 +127,7 @@
             btnPendingOrder.Cursor = Cursors.Hand;
             btnPendingOrder.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPendingOrder.ForeColor = Color.White;
-            btnPendingOrder.Location = new Point(12, 83);
+            btnPendingOrder.Location = new Point(19, 85);
             btnPendingOrder.Name = "btnPendingOrder";
             btnPendingOrder.Size = new Size(315, 60);
             btnPendingOrder.TabIndex = 12;
@@ -137,45 +135,25 @@
             btnPendingOrder.UseVisualStyleBackColor = false;
             btnPendingOrder.Click += btnPendingOrder_Click;
             // 
-            // completeOrderCount
-            // 
-            completeOrderCount.AutoSize = true;
-            completeOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            completeOrderCount.Location = new Point(610, 97);
-            completeOrderCount.Name = "completeOrderCount";
-            completeOrderCount.Size = new Size(42, 32);
-            completeOrderCount.TabIndex = 17;
-            completeOrderCount.Text = "20";
-            // 
             // pendingOrderCount
             // 
             pendingOrderCount.AutoSize = true;
-            pendingOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            pendingOrderCount.Location = new Point(255, 97);
+            pendingOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            pendingOrderCount.Location = new Point(279, 99);
             pendingOrderCount.Name = "pendingOrderCount";
             pendingOrderCount.Size = new Size(42, 32);
             pendingOrderCount.TabIndex = 16;
             pendingOrderCount.Text = "20";
             // 
-            // label1
+            // completeOrderCount
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(266, 97);
-            label1.Name = "label1";
-            label1.Size = new Size(42, 32);
-            label1.TabIndex = 18;
-            label1.Text = "20";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(610, 97);
-            label2.Name = "label2";
-            label2.Size = new Size(42, 32);
-            label2.TabIndex = 19;
-            label2.Text = "20";
+            completeOrderCount.AutoSize = true;
+            completeOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            completeOrderCount.Location = new Point(665, 99);
+            completeOrderCount.Name = "completeOrderCount";
+            completeOrderCount.Size = new Size(42, 32);
+            completeOrderCount.TabIndex = 17;
+            completeOrderCount.Text = "20";
             // 
             // Form_Customer_View_Order
             // 
@@ -183,14 +161,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1575, 830);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(completeOrderCount);
+            Controls.Add(pendingOrderCount);
             Controls.Add(TLPanelTop);
             Controls.Add(loadPanel);
             Controls.Add(btnCompleteOrder);
             Controls.Add(btnPendingOrder);
-            Controls.Add(completeOrderCount);
-            Controls.Add(pendingOrderCount);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form_Customer_View_Order";
             Text = "Form_Customer_View_Order";
@@ -210,9 +186,7 @@
         private Panel loadPanel;
         private Button btnCompleteOrder;
         private Button btnPendingOrder;
-        private Label completeOrderCount;
         private Label pendingOrderCount;
-        private Label label1;
-        private Label label2;
+        private Label completeOrderCount;
     }
 }

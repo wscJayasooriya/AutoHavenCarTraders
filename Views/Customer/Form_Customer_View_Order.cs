@@ -21,7 +21,7 @@ namespace CarTraders.Views
         public Form_Customer_View_Order(string username)
         {
             InitializeComponent();
-            LoadPendingOrders(false);
+
             btnPendingOrder.BackColor = Color.FromArgb(33, 97, 140);
             currentUser = username;
             dataGridView.CellClick += TablePendingOrderView_CellClick;
@@ -33,6 +33,7 @@ namespace CarTraders.Views
             {
                 var user = context.users.FirstOrDefault(u => u.Username == currentUser);
                 userCode = user.UserCode;
+                LoadPendingOrders(false);
                 pendingOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 0 && o.CustomerCode == userCode).ToString();
                 completeOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 1 && o.CustomerCode == userCode).ToString();
             }
@@ -58,7 +59,6 @@ namespace CarTraders.Views
                 using (var dbContext = new ApplicationDBContext())
                 {
                     List<OrderDetails> pendingOrders;
-
                     if (a)
                     {
                         pendingOrders = dbContext.orderDetails
@@ -159,11 +159,11 @@ namespace CarTraders.Views
             dataGridView.Columns["DeliveredDate"].Visible = false;
             dataGridView.Columns["ApprovedBy"].Visible = false;
 
-            dataGridView.Columns["OrderDate"].Width = 230;
+            dataGridView.Columns["OrderDate"].Width = 250;
             dataGridView.Columns["OrderDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["OrderDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["OrderDate"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["ApprovedDate"].Width = 230;
+            dataGridView.Columns["ApprovedDate"].Width = 250;
             dataGridView.Columns["ApprovedDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["ApprovedDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["ApprovedDate"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;

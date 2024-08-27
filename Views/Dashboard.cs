@@ -1,5 +1,6 @@
 ﻿using CarTraders.Data;
 using CarTraders.Views;
+using CarTraders.Views.Customer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace CarTraders
         Form_Users _Users;
         Form_ManageOrder _ManageOrder;
         Form_Customer_View_Order _Customer_View_Order;
+        Form_Customer_Dashboard _Customer_Dashboard;
         public string currentUser;
         public string userRole;
         public string userFirstName;
@@ -38,6 +40,14 @@ namespace CarTraders
                 var user = dbContext.users.FirstOrDefault(u => u.Username == currentUser && u.Status == 1);
                 userRole = user.UserRole;
                 userFirstName = user.FirstName;
+            }
+            if (userRole == "User_Role")
+            {
+                OpenChildForm(new Form_Dashboard());
+            }
+            else
+            {
+                OpenChildForm(new Form_Customer_Dashboard(currentUser));
             }
             AdjustUIForUserRole();
         }
@@ -156,18 +166,37 @@ namespace CarTraders
 
         private void dashboardNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = dashboardNav.Text.Trim();
-            labelNav.Text = dashboardNav.Text.Trim();
-            dashboardNav.BackColor = Color.FromArgb(97, 106, 107);
-            carNav.BackColor = Color.FromArgb(52, 73, 94);
-            carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
-            customerNav.BackColor = Color.FromArgb(52, 73, 94);
-            orderNav.BackColor = Color.FromArgb(52, 73, 94);
-            reportNav.BackColor = Color.FromArgb(52, 73, 94);
-            manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
-            logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_Dashboard());
+
+            if (userRole == "Customer_Role")
+            {
+                labelHead.Text = dashboardNav.Text.Trim();
+                labelNav.Text = dashboardNav.Text.Trim();
+                dashboardNav.BackColor = Color.FromArgb(97, 106, 107);
+                carNav.BackColor = Color.FromArgb(52, 73, 94);
+                carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
+                customerNav.BackColor = Color.FromArgb(52, 73, 94);
+                orderNav.BackColor = Color.FromArgb(52, 73, 94);
+                reportNav.BackColor = Color.FromArgb(52, 73, 94);
+                manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
+                logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+                OpenChildForm(new Form_Customer_Dashboard(currentUser));
+            }
+            else
+            {
+                labelHead.Text = dashboardNav.Text.Trim();
+                labelNav.Text = dashboardNav.Text.Trim();
+                dashboardNav.BackColor = Color.FromArgb(97, 106, 107);
+                carNav.BackColor = Color.FromArgb(52, 73, 94);
+                carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
+                customerNav.BackColor = Color.FromArgb(52, 73, 94);
+                orderNav.BackColor = Color.FromArgb(52, 73, 94);
+                reportNav.BackColor = Color.FromArgb(52, 73, 94);
+                manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
+                logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+                OpenChildForm(new Form_Dashboard());
+            }
         }
 
         private void customerReportNav_Click(object sender, EventArgs e)
@@ -314,18 +343,38 @@ namespace CarTraders
 
         private void manageUserNave_Click(object sender, EventArgs e)
         {
-            labelHead.Text = manageUserNave.Text.Trim();
-            labelNav.Text = manageUserNave.Text.Trim();
-            dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
-            carNav.BackColor = Color.FromArgb(52, 73, 94);
-            carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
-            customerNav.BackColor = Color.FromArgb(52, 73, 94);
-            orderNav.BackColor = Color.FromArgb(52, 73, 94);
-            reportNav.BackColor = Color.FromArgb(52, 73, 94);
-            manageUserNave.BackColor = Color.FromArgb(97, 106, 107);
-            logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_Users(currentUser));
+
+
+            if (userRole == "Customer_Role")
+            {
+                labelHead.Text = manageUserNave.Text.Trim();
+                labelNav.Text = manageUserNave.Text.Trim();
+                dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
+                carNav.BackColor = Color.FromArgb(52, 73, 94);
+                carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
+                customerNav.BackColor = Color.FromArgb(52, 73, 94);
+                orderNav.BackColor = Color.FromArgb(52, 73, 94);
+                reportNav.BackColor = Color.FromArgb(52, 73, 94);
+                manageUserNave.BackColor = Color.FromArgb(97, 106, 107);
+                logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+                OpenChildForm(new Form_Manage_Account(currentUser));
+            }
+            else
+            {
+                labelHead.Text = manageUserNave.Text.Trim();
+                labelNav.Text = manageUserNave.Text.Trim();
+                dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
+                carNav.BackColor = Color.FromArgb(52, 73, 94);
+                carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
+                customerNav.BackColor = Color.FromArgb(52, 73, 94);
+                orderNav.BackColor = Color.FromArgb(52, 73, 94);
+                reportNav.BackColor = Color.FromArgb(52, 73, 94);
+                manageUserNave.BackColor = Color.FromArgb(97, 106, 107);
+                logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+                OpenChildForm(new Form_Users(currentUser));
+            }
         }
 
         private void logoutNav_Click(object sender, EventArgs e)

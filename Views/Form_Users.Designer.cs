@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Users));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             labelUsername = new Label();
             txtContactNo = new TextBox();
             labelContact = new Label();
@@ -471,6 +471,7 @@
             TLPanelTop.Controls.Add(btnAdd, 0, 0);
             TLPanelTop.Controls.Add(panel1, 4, 0);
             TLPanelTop.Dock = DockStyle.Top;
+            TLPanelTop.Enabled = false;
             TLPanelTop.Location = new Point(0, 0);
             TLPanelTop.Name = "TLPanelTop";
             TLPanelTop.Padding = new Padding(2);
@@ -549,14 +550,14 @@
             tableUserView.BorderStyle = BorderStyle.None;
             tableUserView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             tableUserView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            tableUserView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            tableUserView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             tableUserView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableUserView.EnableHeadersVisualStyles = false;
             tableUserView.Location = new Point(24, 119);
