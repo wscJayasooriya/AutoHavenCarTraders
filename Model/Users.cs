@@ -47,5 +47,9 @@ namespace CarTraders.Model
         public int Status { get; set; }
         public int VerificationCode { get; set; }
         public DateTime OtpExpireTime { get; set; }
+
+        public int IsDeleted { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

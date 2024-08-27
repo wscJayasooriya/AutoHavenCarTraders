@@ -24,14 +24,17 @@ namespace CarTraders
         private Point labelSpecOriginalLocation;
         private Point txtSpecificationOriginalLocation;
         private string hiddenCarId;
+        public string currentUser;
+
         private CodeGenerateUtil generateUtil;
 
 
-        public Form_Cars()
+        public Form_Cars(string username)
         {
             InitializeComponent();
             generateUtil = new CodeGenerateUtil();
             pictureBoxLoading.Location = new Point((this.Width - pictureBoxLoading.Width) / 2, (this.Height - pictureBoxLoading.Height) / 2);
+            currentUser = username;
         }
 
         private void Form_Cars_Load(object sender, EventArgs e)
@@ -68,7 +71,7 @@ namespace CarTraders
                 {
 
                     var carQuery = dbContext.cars
-                    .Where(u => u.Status == 1);
+                    .Where(u => u.Status == 1 && u.IsDeleted == 0);
 
                     if (!string.IsNullOrEmpty(searchTerm))
                     {
@@ -316,6 +319,7 @@ namespace CarTraders
                     using (var dbContext = new ApplicationDBContext())
                     {
                         var car = dbContext.cars.SingleOrDefault(c => c.Id == carGuid);
+                        var user = dbContext.users.SingleOrDefault(u => u.Username == currentUser);
 
                         if (car == null)
                         {
@@ -323,7 +327,10 @@ namespace CarTraders
                             return;
                         }
                         MessageBox.Show("Car successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        dbContext.cars.Remove(car);
+                        car.IsDeleted = 1;
+                        car.DeletedDate = DateTime.Now;
+                        car.DeletedBy = user.UserCode;
+                        dbContext.cars.Update(car);
                         dbContext.SaveChanges();
 
                         LoadCarData();
@@ -683,6 +690,7 @@ namespace CarTraders
                         existingCar.RegistrationDate = registrationDateTime;
                         existingCar.Price = double.Parse(txtPrice.Text);
                         existingCar.Image = CarImageToByteArray(pictureBox.Image);
+                        existingCar.UpdateDate = DateTime.Now;
 
                         dbContext.SaveChanges();
                         MessageBox.Show("Car details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

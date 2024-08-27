@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            button2 = new Button();
             button1 = new Button();
             txtGrossAmount = new TextBox();
             label4 = new Label();
@@ -45,7 +46,6 @@
             label2 = new Label();
             txtInvoiceNo = new TextBox();
             label1 = new Label();
-            button2 = new Button();
             panel1.SuspendLayout();
             panelOrderMain.SuspendLayout();
             SuspendLayout();
@@ -68,6 +68,21 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(762, 802);
             panel1.TabIndex = 0;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(52, 73, 94);
+            button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(348, 708);
+            button2.Name = "button2";
+            button2.Size = new Size(243, 75);
+            button2.TabIndex = 10;
+            button2.Text = "Approve Order";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -236,20 +251,6 @@
             label1.Size = new Size(88, 22);
             label1.TabIndex = 0;
             label1.Text = "Invice No";
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.FromArgb(52, 73, 94);
-            button2.Cursor = Cursors.Hand;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.White;
-            button2.Location = new Point(348, 708);
-            button2.Name = "button2";
-            button2.Size = new Size(243, 75);
-            button2.TabIndex = 10;
-            button2.Text = "Approve Order";
-            button2.UseVisualStyleBackColor = false;
             // 
             // Form_View_Order
             // 

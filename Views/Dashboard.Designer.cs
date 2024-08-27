@@ -34,8 +34,10 @@
             btnAppClose = new Button();
             btnAppMin = new Button();
             btnHam = new Button();
-            label1 = new Label();
+            labelMain = new Label();
             sidebarPanel = new Panel();
+            panelViewCustomerOrders = new Panel();
+            viewOrdersNav = new Button();
             panel4 = new Panel();
             manageUserNave = new Button();
             reportContainer = new FlowLayoutPanel();
@@ -43,7 +45,7 @@
             reportNav = new Button();
             panel9 = new Panel();
             customerReportNav = new Button();
-            panel10 = new Panel();
+            panelViewOrder = new Panel();
             orderReportNav = new Button();
             panelLogout = new Panel();
             panel2 = new Panel();
@@ -69,11 +71,12 @@
             mainPanel = new Panel();
             panel1.SuspendLayout();
             sidebarPanel.SuspendLayout();
+            panelViewCustomerOrders.SuspendLayout();
             panel4.SuspendLayout();
             reportContainer.SuspendLayout();
             panel8.SuspendLayout();
             panel9.SuspendLayout();
-            panel10.SuspendLayout();
+            panelViewOrder.SuspendLayout();
             panelLogout.SuspendLayout();
             panel2.SuspendLayout();
             panelDashboard.SuspendLayout();
@@ -90,7 +93,7 @@
             panel1.Controls.Add(btnAppClose);
             panel1.Controls.Add(btnAppMin);
             panel1.Controls.Add(btnHam);
-            panel1.Controls.Add(label1);
+            panel1.Controls.Add(labelMain);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
@@ -144,20 +147,21 @@
             btnHam.UseVisualStyleBackColor = false;
             btnHam.Click += btnHam_Click;
             // 
-            // label1
+            // labelMain
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft Sans Serif", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(68, 22);
-            label1.Name = "label1";
-            label1.Size = new Size(233, 30);
-            label1.TabIndex = 3;
-            label1.Text = "Admin Dashboard";
+            labelMain.AutoSize = true;
+            labelMain.Font = new Font("Microsoft Sans Serif", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelMain.ForeColor = Color.White;
+            labelMain.Location = new Point(68, 22);
+            labelMain.Name = "labelMain";
+            labelMain.Size = new Size(233, 30);
+            labelMain.TabIndex = 3;
+            labelMain.Text = "Admin Dashboard";
             // 
             // sidebarPanel
             // 
             sidebarPanel.BackColor = Color.FromArgb(52, 73, 94);
+            sidebarPanel.Controls.Add(panelViewCustomerOrders);
             sidebarPanel.Controls.Add(panel4);
             sidebarPanel.Controls.Add(reportContainer);
             sidebarPanel.Controls.Add(panelLogout);
@@ -172,10 +176,39 @@
             sidebarPanel.Size = new Size(300, 899);
             sidebarPanel.TabIndex = 1;
             // 
+            // panelViewCustomerOrders
+            // 
+            panelViewCustomerOrders.Controls.Add(viewOrdersNav);
+            panelViewCustomerOrders.Location = new Point(3, 6);
+            panelViewCustomerOrders.Name = "panelViewCustomerOrders";
+            panelViewCustomerOrders.Padding = new Padding(0, 30, 0, 0);
+            panelViewCustomerOrders.Size = new Size(297, 80);
+            panelViewCustomerOrders.TabIndex = 6;
+            panelViewCustomerOrders.Visible = false;
+            // 
+            // viewOrdersNav
+            // 
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+            viewOrdersNav.Cursor = Cursors.Hand;
+            viewOrdersNav.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            viewOrdersNav.ForeColor = Color.White;
+            viewOrdersNav.Image = (Image)resources.GetObject("viewOrdersNav.Image");
+            viewOrdersNav.ImageAlign = ContentAlignment.MiddleLeft;
+            viewOrdersNav.Location = new Point(-5, -17);
+            viewOrdersNav.Name = "viewOrdersNav";
+            viewOrdersNav.Padding = new Padding(25, 0, 0, 0);
+            viewOrdersNav.Size = new Size(354, 121);
+            viewOrdersNav.TabIndex = 3;
+            viewOrdersNav.Text = "         View Orders";
+            viewOrdersNav.TextAlign = ContentAlignment.MiddleLeft;
+            viewOrdersNav.UseVisualStyleBackColor = false;
+            viewOrdersNav.Visible = false;
+            viewOrdersNav.Click += viewOrdersNav_Click;
+            // 
             // panel4
             // 
             panel4.Controls.Add(manageUserNave);
-            panel4.Location = new Point(1, 729);
+            panel4.Location = new Point(1, 727);
             panel4.Name = "panel4";
             panel4.Padding = new Padding(0, 30, 0, 0);
             panel4.Size = new Size(297, 80);
@@ -204,7 +237,7 @@
             reportContainer.BackColor = Color.FromArgb(55, 64, 93);
             reportContainer.Controls.Add(panel8);
             reportContainer.Controls.Add(panel9);
-            reportContainer.Controls.Add(panel10);
+            reportContainer.Controls.Add(panelViewOrder);
             reportContainer.Location = new Point(2, 491);
             reportContainer.Margin = new Padding(0);
             reportContainer.Name = "reportContainer";
@@ -267,16 +300,17 @@
             customerReportNav.UseVisualStyleBackColor = false;
             customerReportNav.Click += customerReportNav_Click;
             // 
-            // panel10
+            // panelViewOrder
             // 
-            panel10.BackColor = Color.FromArgb(55, 64, 93);
-            panel10.Controls.Add(orderReportNav);
-            panel10.Location = new Point(0, 160);
-            panel10.Margin = new Padding(0);
-            panel10.Name = "panel10";
-            panel10.Padding = new Padding(0, 30, 0, 0);
-            panel10.Size = new Size(297, 80);
-            panel10.TabIndex = 4;
+            panelViewOrder.BackColor = Color.FromArgb(55, 64, 93);
+            panelViewOrder.Controls.Add(orderReportNav);
+            panelViewOrder.Location = new Point(0, 160);
+            panelViewOrder.Margin = new Padding(0);
+            panelViewOrder.Name = "panelViewOrder";
+            panelViewOrder.Padding = new Padding(0, 30, 0, 0);
+            panelViewOrder.Size = new Size(297, 80);
+            panelViewOrder.TabIndex = 4;
+            panelViewOrder.Visible = false;
             // 
             // orderReportNav
             // 
@@ -330,6 +364,7 @@
             button2.Text = "         Logout";
             button2.TextAlign = ContentAlignment.MiddleLeft;
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -364,6 +399,7 @@
             logoutNav.Text = "         Logout";
             logoutNav.TextAlign = ContentAlignment.MiddleLeft;
             logoutNav.UseVisualStyleBackColor = false;
+            logoutNav.Click += logoutNav_Click;
             // 
             // panelDashboard
             // 
@@ -576,11 +612,12 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             sidebarPanel.ResumeLayout(false);
+            panelViewCustomerOrders.ResumeLayout(false);
             panel4.ResumeLayout(false);
             reportContainer.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
-            panel10.ResumeLayout(false);
+            panelViewOrder.ResumeLayout(false);
             panelLogout.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panelDashboard.ResumeLayout(false);
@@ -598,7 +635,7 @@
         private Panel panel1;
         private Panel sidebarPanel;
         private Panel panel3;
-        private Label label1;
+        private Label labelMain;
         private Button btnHam;
         private Label labelHead;
         private Label label3;
@@ -618,7 +655,7 @@
         private FlowLayoutPanel reportContainer;
         private Panel panel9;
         private Button customerReportNav;
-        private Panel panel10;
+        private Panel panelViewOrder;
         private Button orderReportNav;
         private System.Windows.Forms.Timer reportTransition;
         private Panel panelLogout;
@@ -632,5 +669,7 @@
         private Button button2;
         private Button button1;
         private Label labelNav;
+        private Panel panelViewCustomerOrders;
+        private Button viewOrdersNav;
     }
 }

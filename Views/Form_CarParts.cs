@@ -23,11 +23,13 @@ namespace CarTraders
         private bool isExpanding = true;
         private string hiddenCarPartId;
         private CodeGenerateUtil generateUtil;
-        public Form_CarParts()
+        public string currentUser;
+        public Form_CarParts(string username)
         {
             InitializeComponent();
             generateUtil = new CodeGenerateUtil();
             pictureBoxLoading.Location = new Point((this.Width - pictureBoxLoading.Width) / 2, (this.Height - pictureBoxLoading.Height) / 2);
+            currentUser = username;
         }
 
         private void Form_CarParts_Load(object sender, EventArgs e)
@@ -62,6 +64,7 @@ namespace CarTraders
                     using (var dbContext = new ApplicationDBContext())
                     {
                         var parts = dbContext.carParts.SingleOrDefault(c => c.Id == partGuid);
+                        var users = dbContext.users.SingleOrDefault(u => u.Username == currentUser);
 
                         if (parts == null)
                         {
@@ -69,7 +72,10 @@ namespace CarTraders
                             return;
                         }
                         MessageBox.Show("Car Part successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        dbContext.carParts.Remove(parts);
+                        parts.IsDeleted = 1;
+                        parts.DeletedDate = DateTime.Now;
+                        parts.DeletedBy = users.UserCode;
+                        dbContext.carParts.Update(parts);
                         dbContext.SaveChanges();
 
                         LoadCarPartsData();
@@ -263,7 +269,7 @@ namespace CarTraders
                 {
 
                     var partsQuery = dbContext.carParts
-                    .Where(u => u.Status == 1);
+                    .Where(u => u.Status == 1 && u.IsDeleted == 0);
 
                     if (!string.IsNullOrEmpty(searchTerm))
                     {

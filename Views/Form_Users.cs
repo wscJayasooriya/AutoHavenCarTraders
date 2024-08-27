@@ -25,6 +25,7 @@ namespace CarTraders
         private CodeGenerateUtil generateUtil;
         private bool isExpanding = true;
         private string hiddenUserId;
+        public string currentUser;
 
         private Point labelContactOriginalLocation;
         private Point txtContactOriginalLocation;
@@ -34,12 +35,13 @@ namespace CarTraders
         private Point txtNicOriginalLocation;
         private Point labelDepartmentOriginalLocation;
         private Point txtDepartmentOriginalLocation;
-        public Form_Users()
+        public Form_Users(string username)
         {
             InitializeComponent();
             validatorUtil = new ValidatorUtil();
             generateUtil = new CodeGenerateUtil();
             pictureBoxLoading.Location = new Point((this.Width - pictureBoxLoading.Width) / 2, (this.Height - pictureBoxLoading.Height) / 2);
+            currentUser = username;
 
         }
 
@@ -84,7 +86,7 @@ namespace CarTraders
 
 
                     var usersQuery = dbContext.users
-                    .Where(u => u.UserRole == "User_Role" && u.Status == 1);
+                    .Where(u => u.UserRole == "User_Role" && u.Status == 1 && u.IsDeleted == 0);
 
                     if (!string.IsNullOrEmpty(searchTerm))
                     {
@@ -411,14 +413,18 @@ namespace CarTraders
                     using (var dbContext = new ApplicationDBContext())
                     {
                         var user = dbContext.users.SingleOrDefault(c => c.Id == userGuid);
-
+                        var adminUser = dbContext.users.SingleOrDefault(u => u.Username == currentUser);
                         if (user == null)
                         {
                             MessageBox.Show("User not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                         MessageBox.Show("User successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        dbContext.users.Remove(user);
+
+                        user.DeletedBy = adminUser.UserCode;
+                        user.IsDeleted = 1;
+                        user.DeletedDate = DateTime.Now;
+                        dbContext.users.Update(user);
                         dbContext.SaveChanges();
 
                         LoadUserData();

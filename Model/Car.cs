@@ -35,6 +35,10 @@ namespace CarTraders.Model
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int Status { get; set; }
+        public int IsDeleted { get; set; }
+        public DateTime DeletedDate { get; set; }
+        public string DeletedBy { get; set; }
+
 
     }
 }

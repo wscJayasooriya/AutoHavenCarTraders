@@ -1,5 +1,7 @@
 ﻿using CarTraders.Data;
+using CarTraders.Migrations;
 using CarTraders.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,10 +14,11 @@ using System.Windows.Forms;
 
 namespace CarTraders.Views
 {
-    public partial class Form_ManageOrder : Form
+    public partial class Form_Customer_View_Order : Form
     {
         public string currentUser;
-        public Form_ManageOrder(string username)
+        public string userCode;
+        public Form_Customer_View_Order(string username)
         {
             InitializeComponent();
             LoadPendingOrders(false);
@@ -24,22 +27,23 @@ namespace CarTraders.Views
             dataGridView.CellClick += TablePendingOrderView_CellClick;
         }
 
-        private void Form_ManageOrder_Load(object sender, EventArgs e)
+        private void Form_Customer_View_Order_Load(object sender, EventArgs e)
         {
             using (var context = new ApplicationDBContext())
             {
-                pendingOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 0).ToString();
-                completeOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 1).ToString();
+                var user = context.users.FirstOrDefault(u => u.Username == currentUser);
+                userCode = user.UserCode;
+                pendingOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 0 && o.CustomerCode == userCode).ToString();
+                completeOrderCount.Text = context.orderDetails.Count(o => o.IsApproved == 1 && o.CustomerCode == userCode).ToString();
             }
         }
-
-
         private void btnPendingOrder_Click(object sender, EventArgs e)
         {
             LoadPendingOrders(false);
             btnPendingOrder.BackColor = Color.FromArgb(33, 97, 140);
             btnCompleteOrder.BackColor = Color.FromArgb(23, 32, 42);
         }
+
         private void btnCompleteOrder_Click(object sender, EventArgs e)
         {
             btnPendingOrder.BackColor = Color.FromArgb(23, 32, 42);
@@ -53,20 +57,19 @@ namespace CarTraders.Views
             {
                 using (var dbContext = new ApplicationDBContext())
                 {
-
                     List<OrderDetails> pendingOrders;
 
                     if (a)
                     {
                         pendingOrders = dbContext.orderDetails
-                   .Where(u => u.Is_active == 1 && u.IsApproved == 1)
+                   .Where(u => u.Is_active == 1 && u.IsApproved == 1 && u.CustomerCode == userCode)
                    .OrderBy(u => u.OrderDate)
                    .ToList();
                     }
                     else
                     {
                         pendingOrders = dbContext.orderDetails
-                   .Where(u => u.Is_active == 1 && u.IsApproved == 0)
+                   .Where(u => u.Is_active == 1 && u.IsApproved == 0 && u.CustomerCode == userCode)
                    .OrderBy(u => u.OrderDate)
                    .ToList();
                     }
@@ -114,31 +117,6 @@ namespace CarTraders.Views
                     {
                         dataGridView.Columns["ApprovedDate"].Visible = a;
                     }
-                    if (a)
-                    {
-                        if (dataGridView.Columns.Contains("Approve"))
-                        {
-                            dataGridView.Columns["Approve"].Visible = false;
-                        }
-                    }
-                    else
-                    {
-                        if (!dataGridView.Columns.Contains("Approve"))
-                        {
-                            DataGridViewButtonColumn approveButtonColumn = new DataGridViewButtonColumn
-                            {
-                                Name = "Approve",
-                                HeaderText = "Approve",
-                                Text = "Approve",
-                                UseColumnTextForButtonValue = true
-                            };
-                            dataGridView.Columns.Add(approveButtonColumn);
-                        }
-                        else
-                        {
-                            dataGridView.Columns["Approve"].Visible = true; // Ensure the column is visible if 'a' is false
-                        }
-                    }
 
                     if (!dataGridView.Columns.Contains("View"))
                     {
@@ -160,8 +138,6 @@ namespace CarTraders.Views
                 MessageBox.Show("An error occurred while loading car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         private void ConfigureDataGridView()
         {
@@ -219,16 +195,16 @@ namespace CarTraders.Views
 
             dataGridView.CellFormatting += (sender, e) =>
             {
-                if (e.ColumnIndex == dataGridView.Columns["Approve"].Index && e.RowIndex >= 0)
-                {
-                    DataGridViewButtonCell? buttonCell = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
-                    if (buttonCell != null)
-                    {
-                        dataGridView.Rows[e.RowIndex].Height = 70;
-                        dataGridView.Columns[e.ColumnIndex].Width = 200;
-                        dataGridView.Cursor = Cursors.Hand;
-                    }
-                }
+                //if (e.ColumnIndex == dataGridView.Columns["Approve"].Index && e.RowIndex >= 0)
+                //{
+                //    DataGridViewButtonCell? buttonCell = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
+                //    if (buttonCell != null)
+                //    {
+                //        dataGridView.Rows[e.RowIndex].Height = 70;
+                //        dataGridView.Columns[e.ColumnIndex].Width = 200;
+                //        dataGridView.Cursor = Cursors.Hand;
+                //    }
+                //}
                 if (e.ColumnIndex == dataGridView.Columns["View"].Index && e.RowIndex >= 0)
                 {
                     DataGridViewButtonCell? buttonCell = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
@@ -240,13 +216,10 @@ namespace CarTraders.Views
                     }
                 }
             };
-
         }
 
         private void TablePendingOrderView_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-
-
             if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView.Columns["View"].Index)
             {
                 // Extract OrderCode from the row
@@ -257,16 +230,17 @@ namespace CarTraders.Views
                 view_Order.Show();
             }
 
-            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView.Columns["Approve"].Index)
-            {
-                // Extract OrderCode from the row
-                var row = dataGridView.Rows[e.RowIndex];
-                string orderCode = row.Cells["OrderCode"].Value.ToString();
+            //if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView.Columns["Approve"].Index)
+            //{
+            //    // Extract OrderCode from the row
+            //    var row = dataGridView.Rows[e.RowIndex];
+            //    string orderCode = row.Cells["OrderCode"].Value.ToString();
 
-                Form_View_Order view_Order = new Form_View_Order(orderCode, currentUser, true);
-                view_Order.Show();
-            }
+            //    Form_View_Order view_Order = new Form_View_Order(orderCode, currentUser, true);
+            //    view_Order.Show();
+            //}
         }
+
 
     }
 }

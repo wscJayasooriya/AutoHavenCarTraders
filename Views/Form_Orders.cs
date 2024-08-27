@@ -52,13 +52,18 @@ namespace CarTraders
         private void btnCar_Click(object sender, EventArgs e)
         {
             carPartPanel.Controls.Clear();
+            btnCar.BackColor = Color.FromArgb(33, 97, 140);
+            btnCarParts.BackColor = Color.FromArgb(23, 32, 42);
+
             btnPartClear.Visible = false;
             btnPartPlaceOrder.Visible = false;
             carPartPanel.AutoScroll = false;
             using (var dbContext = new ApplicationDBContext())
             {
 
-                var cars = dbContext.cars.ToList();
+                var cars = dbContext.cars
+                    .Where(c => c.Status == 1 && c.IsDeleted == 0)
+                    .ToList();
 
                 loadPanel.Controls.Clear();
                 int yPos = 10;
@@ -125,7 +130,7 @@ namespace CarTraders
 
                     // Create "Add to Cart" Button
                     Button btnAddToCart = new Button();
-                    btnAddToCart.Text = "Add Cart";
+                    btnAddToCart.Text = "Buy";
                     btnAddToCart.Size = new Size(100, 30);
                     btnAddToCart.Location = new Point(140, 250);
                     btnAddToCart.FlatStyle = FlatStyle.Flat;
@@ -266,6 +271,8 @@ namespace CarTraders
         private void btnCarParts_Click(object sender, EventArgs e)
         {
             carPartPanel.Controls.Clear();
+            btnCar.BackColor = Color.FromArgb(23, 32, 42);
+            btnCarParts.BackColor = Color.FromArgb(33, 97, 140);
             btnPartClear.Visible = false;
             btnPartPlaceOrder.Visible = false;
             carPartPanel.AutoScroll = false;
@@ -273,7 +280,7 @@ namespace CarTraders
             using (var dbContext = new ApplicationDBContext())
             {
                 var carPartQuery = dbContext.carParts
-                    .Where(cp => cp.Status == 1 && cp.Quantity > 0);
+                    .Where(cp => cp.Status == 1 && cp.Quantity > 0 && cp.IsDeleted == 0);
                 var carPartsList = carPartQuery.ToList();
                 carParts = carPartsList;
 
@@ -499,7 +506,7 @@ namespace CarTraders
 
         private void DisplayCarInCartPanel(Car car)
         {
-
+            btnPartPlaceOrder.Text = "Inquire Car";
             // Clear existing controls from the cartPanel
             carPartPanel.Controls.Clear();
             cartPanel.BorderStyle = BorderStyle.FixedSingle;

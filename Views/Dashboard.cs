@@ -23,8 +23,10 @@ namespace CarTraders
         Form_ReportCustomer _CustomerReport;
         Form_Users _Users;
         Form_ManageOrder _ManageOrder;
+        Form_Customer_View_Order _Customer_View_Order;
         public string currentUser;
         public string userRole;
+        public string userFirstName;
 
         public Dashboard(String username)
         {
@@ -35,6 +37,34 @@ namespace CarTraders
             {
                 var user = dbContext.users.FirstOrDefault(u => u.Username == currentUser && u.Status == 1);
                 userRole = user.UserRole;
+                userFirstName = user.FirstName;
+            }
+            AdjustUIForUserRole();
+        }
+
+        private void AdjustUIForUserRole()
+        {
+            if (userRole == "Customer_Role")
+            {
+                carNav.Visible = false;
+                panelCars.Visible = false;
+                carPartsNav.Visible = false;
+                panelCarParts.Visible = false;
+                customerNav.Visible = false;
+                panelCustomers.Visible = false;
+                reportNav.Visible = false;
+                reportContainer.Visible = false;
+
+                panelOrders.Location = panelCars.Location;
+                orderNav.Visible = true;
+                orderNav.Text = "         Shop Now";
+
+                panelViewCustomerOrders.Location = panelCarParts.Location;
+                panelViewCustomerOrders.Visible = true;
+                viewOrdersNav.Visible = true;
+
+                manageUserNave.Text = "         Manage Account";
+                labelMain.Text = "Hey, " + userFirstName + " Welcome to ABC Car Traders";
             }
         }
 
@@ -56,6 +86,7 @@ namespace CarTraders
                     panelOrders.Width = sidebarPanel.Width;
                     reportContainer.Width = sidebarPanel.Width;
                     panelLogout.Width = sidebarPanel.Width;
+                    panelViewOrder.Width = sidebarPanel.Width;
                 }
             }
             else
@@ -73,6 +104,7 @@ namespace CarTraders
                     panelOrders.Width = sidebarPanel.Width;
                     reportContainer.Width = sidebarPanel.Width;
                     panelLogout.Width = sidebarPanel.Width;
+                    panelViewOrder.Width = sidebarPanel.Width;
                 }
             }
         }
@@ -118,6 +150,7 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(97, 106, 107);
             manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
             reportTransition.Start();
         }
 
@@ -133,6 +166,7 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(52, 73, 94);
             manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
             OpenChildForm(new Form_Dashboard());
         }
 
@@ -169,11 +203,13 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(52, 73, 94);
             manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_Cars());
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+            OpenChildForm(new Form_Cars(currentUser));
         }
 
         private void carPartsNav_Click(object sender, EventArgs e)
         {
+
             labelHead.Text = carPartsNav.Text.Trim();
             labelNav.Text = carPartsNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -184,7 +220,10 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(52, 73, 94);
             manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_CarParts());
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+            OpenChildForm(new Form_CarParts(currentUser));
+
+
         }
 
         private void customerNav_Click(object sender, EventArgs e)
@@ -199,7 +238,8 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(52, 73, 94);
             manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_Customers());
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+            OpenChildForm(new Form_Customers(currentUser));
         }
 
         private void orderNav_Click(object sender, EventArgs e)
@@ -217,6 +257,7 @@ namespace CarTraders
                 reportNav.BackColor = Color.FromArgb(52, 73, 94);
                 manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
                 logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
                 OpenChildForm(new Form_Orders(currentUser));
             }
             else
@@ -231,6 +272,7 @@ namespace CarTraders
                 reportNav.BackColor = Color.FromArgb(52, 73, 94);
                 manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
                 logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+                viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
                 OpenChildForm(new Form_ManageOrder(currentUser));
             }
 
@@ -282,7 +324,42 @@ namespace CarTraders
             reportNav.BackColor = Color.FromArgb(52, 73, 94);
             manageUserNave.BackColor = Color.FromArgb(97, 106, 107);
             logoutNav.BackColor = Color.FromArgb(52, 73, 94);
-            OpenChildForm(new Form_Users());
+            viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
+            OpenChildForm(new Form_Users(currentUser));
+        }
+
+        private void logoutNav_Click(object sender, EventArgs e)
+        {
+            Form_Login form_Login = new Form_Login();
+            form_Login.Show();
+            this.Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to Logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Form_Login form_Login = new Form_Login();
+                form_Login.Show();
+                this.Hide();
+            }
+        }
+
+        private void viewOrdersNav_Click(object sender, EventArgs e)
+        {
+            labelHead.Text = viewOrdersNav.Text.Trim();
+            labelNav.Text = viewOrdersNav.Text.Trim();
+            dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
+            carNav.BackColor = Color.FromArgb(52, 73, 94);
+            carPartsNav.BackColor = Color.FromArgb(52, 73, 94);
+            customerNav.BackColor = Color.FromArgb(52, 73, 94);
+            orderNav.BackColor = Color.FromArgb(52, 73, 94);
+            reportNav.BackColor = Color.FromArgb(52, 73, 94);
+            manageUserNave.BackColor = Color.FromArgb(52, 73, 94);
+            logoutNav.BackColor = Color.FromArgb(52, 73, 94);
+            viewOrdersNav.BackColor = Color.FromArgb(97, 106, 107);
+            OpenChildForm(new Form_Customer_View_Order(currentUser));
         }
     }
 }

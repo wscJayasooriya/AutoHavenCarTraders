@@ -17,6 +17,7 @@ namespace CarTraders
         private int currentCustomerCount = 0;
         private int currentCarCount = 0;
         private int currentCarPartCount = 0;
+        private int currentPendingOrderCount = 0;
         private int activeCustomerCount = 0;
         private int activeCarCount = 0;
         private int activeCarPartCount = 0;
@@ -33,9 +34,10 @@ namespace CarTraders
             this.ControlBox = false;
             using (var context = new ApplicationDBContext())
             {
-                activeCustomerCount = context.users.Count(u => u.UserRole == "Customer_Role" && u.Status == 1);
-                activeCarCount = context.cars.Count(c => c.Status == 1);
-                activeCarPartCount = context.carParts.Count(c => c.Status == 1 && c.Quantity > 0);
+                activeCustomerCount = context.users.Count(u => u.UserRole == "Customer_Role" && u.Status == 1 && u.IsDeleted == 0);
+                activeCarCount = context.cars.Count(c => c.Status == 1 && c.IsDeleted == 0);
+                activeCarPartCount = context.carParts.Count(c => c.Status == 1 && c.Quantity > 0 && c.IsDeleted == 0);
+                pendingOrderCount = context.orderDetails.Count(c => c.Is_active == 1 && c.IsApproved == 0);
 
                 // Car Latest Details
                 var latestCar = context.cars
@@ -192,6 +194,13 @@ namespace CarTraders
                 currentCarPartCount++;
                 labelCarPartCount.Visible = true;
                 labelCarPartCount.Text = currentCarPartCount.ToString();
+                allCountsUpdated = false;
+            }
+            if (currentPendingOrderCount < pendingOrderCount)
+            {
+                currentPendingOrderCount++;
+                labelPendingOrderCount.Visible = true;
+                labelPendingOrderCount.Text = currentPendingOrderCount.ToString();
                 allCountsUpdated = false;
             }
 

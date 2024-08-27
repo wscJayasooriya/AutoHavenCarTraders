@@ -13,10 +13,17 @@ namespace CarTraders.Views
 {
     public partial class Form_View_Order : Form
     {
-        public Form_View_Order(string orderCode)
+        public string currentUser;
+        public Form_View_Order(string orderCode, string username, bool v)
         {
             InitializeComponent();
             panelOrderMain.AutoScroll = true;
+            currentUser = username;
+
+            if (!v)
+            {
+                button2.Visible = false;
+            }
 
             using (var dbContext = new ApplicationDBContext())
             {
@@ -40,14 +47,14 @@ namespace CarTraders.Views
                 {
                     Panel panelLine = new Panel
                     {
-                        Size = new Size(panelOrderMain.Width - 20, 100), // Set the size of the panel
-                        Location = new Point(5, yPos), // Set the location
+                        Size = new Size(panelOrderMain.Width - 20, 100),
+                        Location = new Point(5, yPos),
                         BorderStyle = BorderStyle.FixedSingle
                     };
                     PictureBox pictureBox = new PictureBox
                     {
-                        Size = new Size(90, 90), // Set size of picture box
-                        Location = new Point(5, 5), // Set location to top-left corner of the panel
+                        Size = new Size(90, 90),
+                        Location = new Point(5, 5),
                         BorderStyle = BorderStyle.FixedSingle,
                         SizeMode = PictureBoxSizeMode.StretchImage
                     };
@@ -99,6 +106,35 @@ namespace CarTraders.Views
             this.Close();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string invoiceNo = txtInvoiceNo.Text;
+            string approvedBy;
 
+            using (var dbContext = new ApplicationDBContext())
+            {
+                var orderDetails = dbContext.orderDetails.FirstOrDefault(o => o.OrderCode == invoiceNo);
+                var userDetail = dbContext.users.FirstOrDefault(u => u.Username == currentUser);
+                approvedBy = userDetail.UserCode;
+
+                if (orderDetails == null)
+                {
+                    MessageBox.Show("Order not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Update the order details
+                orderDetails.IsApproved = 1;
+                orderDetails.OrderStatus = "Approved";
+                orderDetails.ApprovedDate = DateTime.Now;
+                orderDetails.ApprovedBy = approvedBy;
+                dbContext.SaveChanges();
+
+                MessageBox.Show("Order approved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+
+
+            }
+        }
     }
 }
