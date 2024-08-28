@@ -222,7 +222,7 @@
             manageUserNave.ForeColor = Color.White;
             manageUserNave.Image = (Image)resources.GetObject("manageUserNave.Image");
             manageUserNave.ImageAlign = ContentAlignment.MiddleLeft;
-            manageUserNave.Location = new Point(-5, -17);
+            manageUserNave.Location = new Point(-6, -10);
             manageUserNave.Name = "manageUserNave";
             manageUserNave.Padding = new Padding(25, 0, 0, 0);
             manageUserNave.Size = new Size(354, 121);
@@ -286,7 +286,7 @@
             // customerReportNav
             // 
             customerReportNav.BackColor = Color.FromArgb(55, 64, 93);
-            customerReportNav.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            customerReportNav.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             customerReportNav.ForeColor = Color.White;
             customerReportNav.Image = (Image)resources.GetObject("customerReportNav.Image");
             customerReportNav.ImageAlign = ContentAlignment.MiddleLeft;
@@ -295,7 +295,7 @@
             customerReportNav.Padding = new Padding(25, 0, 0, 0);
             customerReportNav.Size = new Size(354, 121);
             customerReportNav.TabIndex = 3;
-            customerReportNav.Text = "         Customer Report";
+            customerReportNav.Text = "         Item Wise Sales Report";
             customerReportNav.TextAlign = ContentAlignment.MiddleLeft;
             customerReportNav.UseVisualStyleBackColor = false;
             customerReportNav.Click += customerReportNav_Click;

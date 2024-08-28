@@ -772,7 +772,6 @@
         private Button btnCarSave;
         private Label labelHead;
         private Panel panelAddPage;
-        private customTextbox customTextbox2;
         private Panel panelBody;
         private Label label2;
         private Button buttonChooseImage;

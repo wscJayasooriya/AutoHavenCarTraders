@@ -152,6 +152,19 @@
         rkJggg==
 </value>
   </data>
+  <data name="customerReportNav.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAZ1JREFUWEftl+FxwjAMhTMCG5QROkJHYAPYoGwAI7ABbMAIjMAIjNAR0vcs2ec4
+        sp0E90fv8t3pYkvP1muSc2i3lL7vvxE/iBfiqOkAcl+IGGo3Wn4PbMTmKXstOzA/SHrAh5aXg032spdJ
+        MIFxewPYYCf7FNmptq0BLP5E8DnWoIbadgawMNf8rJFC7UWGA+YbwKItgm96ylkl1FgmLOYZwIJqcw9z
+        Uioy3QDEueYXlVBzYuiUc+u2x0wzAGGu+U0lvrknNnGTlEndAEQbhNX8rpK0uSc2cZfUiLIBCNj86aRD
+        mHPHKK5Wc48zgWt1HxMVpExt7nHfBVxzJh6sj0DhKvUBfBRbrZeO4BR3JOOae5eurAeYkPyApc0900xg
+        YN3WuPnUIzjFHcm6R87EicV08xbNPVUTLBxl6OAC3zznei7pnvEfJCcqBg9E1e0bWHf1xbmDRRZ0ynnp
+        NFtKePMxZj9nyATFPzVQBeJ/YYDPNY4aTQ0s+T3Q1MBBpQHmpJRlNbAaWA3MMhB/IVPC1y0GOX5kSgfS
+        6F/4ruu6X7IZ05n8zw2OAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="viewOrdersNav.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACYAAAAgCAYAAAB+ZAqzAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -194,19 +207,6 @@
         yXauSAJxN9fcG8SKAk7eveGauyRwX9ps8rc2ZDLMiQVg6ZEaNQ8Q64vQdfS0LMG8TECfYvOAcpj+ydQ/
         q0ZgbiYgBLQHqs1bQY98DzwTeg4LIKYvWr1GizwN6tYF4GujBaIDpBXUHRQQJaHpJ5mg5iwBWor0B8d/
         LTpzrLUHv/RrZlGstQdfCp/JxVrfIainMHT2t4LPuG79BxtRNM89meYZAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="customerReportNav.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAZ1JREFUWEftl+FxwjAMhTMCG5QROkJHYAPYoGwAI7ABbMAIjMAIjNAR0vcs2ec4
-        sp0E90fv8t3pYkvP1muSc2i3lL7vvxE/iBfiqOkAcl+IGGo3Wn4PbMTmKXstOzA/SHrAh5aXg032spdJ
-        MIFxewPYYCf7FNmptq0BLP5E8DnWoIbadgawMNf8rJFC7UWGA+YbwKItgm96ylkl1FgmLOYZwIJqcw9z
-        Uioy3QDEueYXlVBzYuiUc+u2x0wzAGGu+U0lvrknNnGTlEndAEQbhNX8rpK0uSc2cZfUiLIBCNj86aRD
-        mHPHKK5Wc48zgWt1HxMVpExt7nHfBVxzJh6sj0DhKvUBfBRbrZeO4BR3JOOae5eurAeYkPyApc0900xg
-        YN3WuPnUIzjFHcm6R87EicV08xbNPVUTLBxl6OAC3zznei7pnvEfJCcqBg9E1e0bWHf1xbmDRRZ0ynnp
-        NFtKePMxZj9nyATFPzVQBeJ/YYDPNY4aTQ0s+T3Q1MBBpQHmpJRlNbAaWA3MMhB/IVPC1y0GOX5kSgfS
-        6F/4ruu6X7IZ05n8zw2OAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="orderReportNav.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
