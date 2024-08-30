@@ -16,9 +16,11 @@ namespace CarTraders
 {
     public partial class Form_Forgotten_Password : Form
     {
+        EmailSendUtil emailSendUtil;
         public Form_Forgotten_Password()
         {
             InitializeComponent();
+            emailSendUtil = new EmailSendUtil();
         }
 
         private async void btnSendOtp_Click(object sender, EventArgs e)
@@ -38,11 +40,11 @@ namespace CarTraders
 
                     if (user != null)
                     {
-                        int otp = GenerateOtp();
+                        int otp = emailSendUtil.GenerateOtp();
                         user.VerificationCode = otp;
                         user.OtpExpireTime = DateTime.Now.AddMinutes(5);
                         dbContext.SaveChanges();
-                        await SendOtpEmailAsync(email, otp);
+                        await emailSendUtil.SendOtpEmailAsync(email, otp);
                         NotificationUtil.ShowNotification(NotificationType.SUCCESS, "An OTP has been sent to your email address.");
                         Form_OTP form_OTP = new Form_OTP(email);
                         form_OTP.Show();
@@ -58,38 +60,6 @@ namespace CarTraders
             {
                 NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while checking the email: " + ex.Message);
             }
-        }
-
-        private async Task SendOtpEmailAsync(string email, int otp)
-        {
-            try
-            {
-                using (MailMessage mail = new MailMessage())
-                {
-                    mail.From = new MailAddress("jayasooriya114@gmail.com");
-                    mail.To.Add(email);
-                    mail.Subject = "Your OTP Code";
-                    mail.Body = $"Your OTP code is {otp}. It will expire in 5 minutes.";
-                    mail.IsBodyHtml = false;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new System.Net.NetworkCredential("jayasooriya114@gmail.com", "ikip woac rjgz pjso");
-                        smtp.EnableSsl = true;
-                        await smtp.SendMailAsync(mail);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                NotificationUtil.ShowNotification(NotificationType.ERROR, "Failed to send OTP email: " + ex.Message);
-            }
-        }
-
-        private int GenerateOtp()
-        {
-            Random random = new Random();
-            return random.Next(100000, 999999);
         }
     }
 }

@@ -572,7 +572,9 @@ namespace CarTraders
                         CreateDate = DateTime.Now,
                         Status = 1,
                         Specification = specification,
-                        Image = CarImageToByteArray(pictureBox.Image)
+                        Image = CarImageToByteArray(pictureBox.Image),
+                        DeletedBy = "",
+                        IsDeleted = 0
                     };
 
 
@@ -734,7 +736,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " +ex.Message);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " + ex.Message);
             }
             finally
             {

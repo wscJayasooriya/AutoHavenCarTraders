@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_OTP));
             panel1 = new Panel();
+            labelResendOTP = new Label();
+            labelCountdown = new Label();
             txtOtp6 = new TextBox();
             txtOtp1 = new TextBox();
             btnResend = new Button();
@@ -43,12 +46,15 @@
             labelEmail = new Label();
             label2 = new Label();
             label1 = new Label();
+            countdownTimer = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(labelResendOTP);
+            panel1.Controls.Add(labelCountdown);
             panel1.Controls.Add(txtOtp6);
             panel1.Controls.Add(txtOtp1);
             panel1.Controls.Add(btnResend);
@@ -67,6 +73,28 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 600);
             panel1.TabIndex = 0;
+            // 
+            // labelResendOTP
+            // 
+            labelResendOTP.AutoSize = true;
+            labelResendOTP.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelResendOTP.ForeColor = Color.FromArgb(52, 73, 94);
+            labelResendOTP.Location = new Point(588, 457);
+            labelResendOTP.Name = "labelResendOTP";
+            labelResendOTP.Size = new Size(114, 28);
+            labelResendOTP.TabIndex = 14;
+            labelResendOTP.Text = "Resend OTP";
+            // 
+            // labelCountdown
+            // 
+            labelCountdown.AutoSize = true;
+            labelCountdown.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelCountdown.ForeColor = Color.FromArgb(52, 73, 94);
+            labelCountdown.Location = new Point(622, 488);
+            labelCountdown.Name = "labelCountdown";
+            labelCountdown.Size = new Size(57, 25);
+            labelCountdown.TabIndex = 13;
+            labelCountdown.Text = "05:00";
             // 
             // txtOtp6
             // 
@@ -102,6 +130,7 @@
             btnResend.TabIndex = 10;
             btnResend.Text = "Resend OTP";
             btnResend.UseVisualStyleBackColor = false;
+            btnResend.Click += btnResend_Click;
             // 
             // btnVerify
             // 
@@ -213,6 +242,10 @@
             label1.TabIndex = 0;
             label1.Text = "Please Enter The One Time Password";
             // 
+            // countdownTimer
+            // 
+            countdownTimer.Interval = 1000;
+            // 
             // Form_OTP
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -245,5 +278,8 @@
         private TextBox txtOtp3;
         private TextBox txtOtp6;
         private TextBox txtOtp1;
+        private System.Windows.Forms.Timer countdownTimer;
+        private Label labelCountdown;
+        private Label labelResendOTP;
     }
 }

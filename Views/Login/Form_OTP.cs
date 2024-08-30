@@ -16,12 +16,17 @@ namespace CarTraders
     public partial class Form_OTP : Form
     {
         private string userEmail;
+        EmailSendUtil emailSendUtil;
+        private int countdown = 300;
         public Form_OTP(string email)
         {
             InitializeComponent();
+            emailSendUtil = new EmailSendUtil();
             labelEmail.Visible = true;
             labelEmail.Text = email;
             userEmail = email;
+
+            countdownTimer.Tick += CountdownTimer_Tick;
 
             txtOtp1.KeyPress += new KeyPressEventHandler(OtpTextBox_KeyPress);
             txtOtp2.KeyPress += new KeyPressEventHandler(OtpTextBox_KeyPress);
@@ -40,8 +45,23 @@ namespace CarTraders
             this.Load += new EventHandler(Form_OTP_Load);
         }
 
+        private void CountdownTimer_Tick(object? sender, EventArgs e)
+        {
+            countdown--;
+            labelCountdown.Text = TimeSpan.FromSeconds(countdown).ToString(@"mm\:ss");
+            if (countdown <= 0)
+            {
+                countdownTimer.Stop();
+                btnResend.Visible = true;
+                labelCountdown.Visible = false;
+                labelResendOTP.Visible = false;
+            }
+        }
+
         private void Form_OTP_Load(object? sender, EventArgs e)
         {
+            StartOtpCountdown();
+
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
             timer.Interval = 100; // Delay in milliseconds
             timer.Tick += (s, args) =>
@@ -50,6 +70,13 @@ namespace CarTraders
                 txtOtp1.Focus();
             };
             timer.Start();
+        }
+
+        private void StartOtpCountdown()
+        {
+            countdown = 300;
+            btnResend.Visible = false;
+            countdownTimer.Start();
         }
 
         private void OtpTextBox_TextChanged(object? sender, EventArgs e)
@@ -126,6 +153,40 @@ namespace CarTraders
                     NotificationUtil.ShowNotification(NotificationType.INFO, "User not found.");
                 }
             }
+        }
+
+        private async void btnResend_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                using (var dbContext = new ApplicationDBContext())
+                {
+                    var user = dbContext.users.SingleOrDefault(u => u.Email == userEmail);
+
+                    if (user != null)
+                    {
+                        int otp = emailSendUtil.GenerateOtp();
+                        user.VerificationCode = otp;
+                        user.OtpExpireTime = DateTime.Now.AddMinutes(5);
+                        dbContext.SaveChanges();
+                        await emailSendUtil.SendOtpEmailAsync(userEmail, otp);
+                        NotificationUtil.ShowNotification(NotificationType.SUCCESS, "An OTP has been sent to your email address.");
+                        Form_OTP form_OTP = new Form_OTP(userEmail);
+                        form_OTP.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "The entered email address does not exist in our records.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while checking the email: " + ex.Message);
+            }
+            StartOtpCountdown();
         }
     }
 }

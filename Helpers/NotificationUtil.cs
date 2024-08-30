@@ -121,6 +121,10 @@ namespace CarTraders.Helpers
                     popupNotifier.Image = Properties.ResourceImage.info;
                     popupNotifier.HeaderColor = Color.DodgerBlue;
                     break;
+                case NotificationType.ERROR:
+                    popupNotifier.Image = Properties.ResourceImage.Restriction;
+                    popupNotifier.HeaderColor = Color.Red;
+                    break;
             }
 
             // Show the notification

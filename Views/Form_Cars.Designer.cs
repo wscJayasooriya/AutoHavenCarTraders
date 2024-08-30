@@ -30,13 +30,14 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Cars));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel2 = new Panel();
             txtSearch = new TextBox();
             btnSearch = new Button();
             btnAdd = new Button();
             TLPanelTop = new TableLayoutPanel();
+            btnExport = new Button();
             btnRefresh = new Button();
             panelFull = new Panel();
             panelAddPage = new Panel();
@@ -83,7 +84,6 @@
             PnlGrid = new Panel();
             pictureBoxLoading = new PictureBox();
             tableCarView = new DataGridView();
-            btnExport = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             TLPanelTop.SuspendLayout();
@@ -178,6 +178,25 @@
             TLPanelTop.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             TLPanelTop.Size = new Size(1575, 90);
             TLPanelTop.TabIndex = 1;
+            // 
+            // btnExport
+            // 
+            btnExport.BackColor = Color.FromArgb(52, 73, 94);
+            btnExport.Cursor = Cursors.Hand;
+            btnExport.Dock = DockStyle.Fill;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnExport.ForeColor = Color.White;
+            btnExport.Image = (Image)resources.GetObject("btnExport.Image");
+            btnExport.Location = new Point(125, 5);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(114, 80);
+            btnExport.TabIndex = 7;
+            btnExport.Text = "Export";
+            btnExport.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += btnExport_Click;
             // 
             // btnRefresh
             // 
@@ -709,14 +728,14 @@
             tableCarView.BorderStyle = BorderStyle.None;
             tableCarView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             tableCarView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             tableCarView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableCarView.EnableHeadersVisualStyles = false;
             tableCarView.Location = new Point(24, 33);
@@ -729,25 +748,6 @@
             tableCarView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             tableCarView.Size = new Size(882, 400);
             tableCarView.TabIndex = 0;
-            // 
-            // btnExport
-            // 
-            btnExport.BackColor = Color.FromArgb(52, 73, 94);
-            btnExport.Cursor = Cursors.Hand;
-            btnExport.Dock = DockStyle.Fill;
-            btnExport.FlatAppearance.BorderSize = 0;
-            btnExport.FlatStyle = FlatStyle.Flat;
-            btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnExport.ForeColor = Color.White;
-            btnExport.Image = (Image)resources.GetObject("btnExport.Image");
-            btnExport.Location = new Point(125, 5);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new Size(114, 80);
-            btnExport.TabIndex = 7;
-            btnExport.Text = "Export";
-            btnExport.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnExport.UseVisualStyleBackColor = false;
-            btnExport.Click += btnExport_Click;
             // 
             // Form_Cars
             // 
