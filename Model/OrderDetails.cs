@@ -29,6 +29,7 @@ namespace CarTraders.Model
         public DateTime DeliveredDate { get; set; }
         public DateTime ApprovedDate { get; set; }
         public String ApprovedBy { get; set; }
+        public String OrderType { get; set; }
 
     }
 }

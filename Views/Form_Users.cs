@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CarTraders
@@ -183,7 +184,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading user data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.WARN, "An error occurred while loading user data: " + ex.Message);
             }
         }
 
@@ -416,10 +417,10 @@ namespace CarTraders
                         var adminUser = dbContext.users.SingleOrDefault(u => u.Username == currentUser);
                         if (user == null)
                         {
-                            MessageBox.Show("User not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.INFO, "User not found in the database");
                             return;
                         }
-                        MessageBox.Show("User successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.DELETE, "User successfully deleted in the database.");
 
                         user.DeletedBy = adminUser.UserCode;
                         user.IsDeleted = 1;
@@ -432,7 +433,7 @@ namespace CarTraders
                 }
                 else
                 {
-                    MessageBox.Show("Invalid User ID format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.ERROR, "Invalid User ID format.");
                 }
             }
 
@@ -514,11 +515,11 @@ namespace CarTraders
                         existingUser.Image = UserImageToByteArray(pictureBox.Image);
 
                         dbContext.SaveChanges();
-                        MessageBox.Show("User details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.EDIT, "User details updated successfully.");
                     }
                     else
                     {
-                        MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.INFO, "User not found.");
                     }
                     LoadUserData();
                     ClearForm();
@@ -529,7 +530,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while modifying customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while modifying customer data: " + ex.Message);
             }
         }
 
@@ -552,7 +553,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " + ex.Message);
             }
             finally
             {
@@ -576,14 +577,14 @@ namespace CarTraders
 
             if (!validatorUtil.ValidatePassword(password))
             {
-                MessageBox.Show("Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.WARN, "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.");
                 txtPassword.BackColor = Color.FromArgb(205, 97, 85);
                 txtRePassword.BackColor = Color.FromArgb(205, 97, 85);
                 return;
             }
             if (password != rePassword)
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.WARN, "Passwords do not match.");
                 return;
             }
 
@@ -620,14 +621,14 @@ namespace CarTraders
                     {
                         foreach (var validationResult in validationResults)
                         {
-                            MessageBox.Show(validationResult.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.ERROR, "Validation Error: " + validationResult.ErrorMessage);
                         }
                         return;
                     }
 
                     dbContext.users.Add(user);
                     dbContext.SaveChanges();
-                    MessageBox.Show("User Saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationUtil.ShowNotification(NotificationType.SUCCESS, "User Saved successfully.");
 
                     LoadUserData();
                     ClearForm();
@@ -639,7 +640,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while saving user data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while saving user data: " + ex.Message);
             }
         }
     }

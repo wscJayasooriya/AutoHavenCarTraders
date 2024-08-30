@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Cars));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel2 = new Panel();
             txtSearch = new TextBox();
@@ -83,6 +83,7 @@
             PnlGrid = new Panel();
             pictureBoxLoading = new PictureBox();
             tableCarView = new DataGridView();
+            btnExport = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             TLPanelTop.SuspendLayout();
@@ -102,16 +103,16 @@
             panel1.BackColor = Color.FromArgb(52, 73, 94);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(btnSearch);
-            panel1.Location = new Point(245, 5);
+            panel1.Location = new Point(365, 5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1325, 80);
+            panel1.Size = new Size(1205, 80);
             panel1.TabIndex = 4;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
             panel2.Controls.Add(txtSearch);
-            panel2.Location = new Point(829, 13);
+            panel2.Location = new Point(712, 13);
             panel2.Name = "panel2";
             panel2.Size = new Size(416, 55);
             panel2.TabIndex = 9;
@@ -130,7 +131,7 @@
             // 
             btnSearch.BackColor = Color.FromArgb(52, 73, 94);
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
-            btnSearch.Location = new Point(1248, 13);
+            btnSearch.Location = new Point(1131, 13);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(55, 55);
             btnSearch.TabIndex = 2;
@@ -158,12 +159,13 @@
             // 
             // TLPanelTop
             // 
-            TLPanelTop.ColumnCount = 3;
+            TLPanelTop.ColumnCount = 4;
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            TLPanelTop.Controls.Add(btnExport, 0, 0);
             TLPanelTop.Controls.Add(btnRefresh, 1, 0);
             TLPanelTop.Controls.Add(btnAdd, 0, 0);
             TLPanelTop.Controls.Add(panel1, 4, 0);
@@ -187,7 +189,7 @@
             btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnRefresh.ForeColor = Color.White;
             btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
-            btnRefresh.Location = new Point(125, 5);
+            btnRefresh.Location = new Point(245, 5);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(114, 80);
             btnRefresh.TabIndex = 1;
@@ -707,14 +709,14 @@
             tableCarView.BorderStyle = BorderStyle.None;
             tableCarView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             tableCarView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             tableCarView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableCarView.EnableHeadersVisualStyles = false;
             tableCarView.Location = new Point(24, 33);
@@ -727,6 +729,25 @@
             tableCarView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             tableCarView.Size = new Size(882, 400);
             tableCarView.TabIndex = 0;
+            // 
+            // btnExport
+            // 
+            btnExport.BackColor = Color.FromArgb(52, 73, 94);
+            btnExport.Cursor = Cursors.Hand;
+            btnExport.Dock = DockStyle.Fill;
+            btnExport.FlatAppearance.BorderSize = 0;
+            btnExport.FlatStyle = FlatStyle.Flat;
+            btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnExport.ForeColor = Color.White;
+            btnExport.Image = (Image)resources.GetObject("btnExport.Image");
+            btnExport.Location = new Point(125, 5);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(114, 80);
+            btnExport.TabIndex = 7;
+            btnExport.Text = "Export";
+            btnExport.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += btnExport_Click;
             // 
             // Form_Cars
             // 
@@ -812,5 +833,6 @@
         private Button btnModify;
         private Button btnRefresh;
         private PictureBox pictureBoxLoading;
+        private Button btnExport;
     }
 }

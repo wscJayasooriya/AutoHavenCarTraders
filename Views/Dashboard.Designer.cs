@@ -46,7 +46,6 @@
             panel9 = new Panel();
             customerReportNav = new Button();
             panelViewOrder = new Panel();
-            orderReportNav = new Button();
             panelLogout = new Panel();
             panel2 = new Panel();
             button2 = new Button();
@@ -64,7 +63,6 @@
             customerNav = new Button();
             panel3 = new Panel();
             labelNav = new Label();
-            label3 = new Label();
             labelHead = new Label();
             sidebarTransition = new System.Windows.Forms.Timer(components);
             reportTransition = new System.Windows.Forms.Timer(components);
@@ -76,7 +74,6 @@
             reportContainer.SuspendLayout();
             panel8.SuspendLayout();
             panel9.SuspendLayout();
-            panelViewOrder.SuspendLayout();
             panelLogout.SuspendLayout();
             panel2.SuspendLayout();
             panelDashboard.SuspendLayout();
@@ -286,6 +283,7 @@
             // customerReportNav
             // 
             customerReportNav.BackColor = Color.FromArgb(55, 64, 93);
+            customerReportNav.Cursor = Cursors.Hand;
             customerReportNav.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             customerReportNav.ForeColor = Color.White;
             customerReportNav.Image = (Image)resources.GetObject("customerReportNav.Image");
@@ -303,7 +301,6 @@
             // panelViewOrder
             // 
             panelViewOrder.BackColor = Color.FromArgb(55, 64, 93);
-            panelViewOrder.Controls.Add(orderReportNav);
             panelViewOrder.Location = new Point(0, 160);
             panelViewOrder.Margin = new Padding(0);
             panelViewOrder.Name = "panelViewOrder";
@@ -311,22 +308,6 @@
             panelViewOrder.Size = new Size(297, 80);
             panelViewOrder.TabIndex = 4;
             panelViewOrder.Visible = false;
-            // 
-            // orderReportNav
-            // 
-            orderReportNav.BackColor = Color.FromArgb(55, 64, 93);
-            orderReportNav.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            orderReportNav.ForeColor = Color.White;
-            orderReportNav.Image = (Image)resources.GetObject("orderReportNav.Image");
-            orderReportNav.ImageAlign = ContentAlignment.MiddleLeft;
-            orderReportNav.Location = new Point(-5, -17);
-            orderReportNav.Name = "orderReportNav";
-            orderReportNav.Padding = new Padding(25, 0, 0, 0);
-            orderReportNav.Size = new Size(354, 121);
-            orderReportNav.TabIndex = 3;
-            orderReportNav.Text = "         Order Reports";
-            orderReportNav.TextAlign = ContentAlignment.MiddleLeft;
-            orderReportNav.UseVisualStyleBackColor = false;
             // 
             // panelLogout
             // 
@@ -540,7 +521,6 @@
             // 
             panel3.BackColor = Color.White;
             panel3.Controls.Add(labelNav);
-            panel3.Controls.Add(label3);
             panel3.Controls.Add(labelHead);
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(300, 75);
@@ -551,22 +531,12 @@
             // labelNav
             // 
             labelNav.AutoSize = true;
-            labelNav.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelNav.Location = new Point(1380, 20);
+            labelNav.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelNav.Location = new Point(1305, 20);
             labelNav.Name = "labelNav";
-            labelNav.Size = new Size(129, 32);
+            labelNav.Size = new Size(138, 32);
             labelNav.TabIndex = 2;
             labelNav.Text = "Dashboard";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(1284, 20);
-            label3.Name = "label3";
-            label3.Size = new Size(102, 32);
-            label3.TabIndex = 1;
-            label3.Text = "Home >";
             // 
             // labelHead
             // 
@@ -574,9 +544,9 @@
             labelHead.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelHead.Location = new Point(6, 20);
             labelHead.Name = "labelHead";
-            labelHead.Size = new Size(138, 32);
+            labelHead.Size = new Size(82, 32);
             labelHead.TabIndex = 0;
-            labelHead.Text = "Dashboard";
+            labelHead.Text = "Home";
             // 
             // sidebarTransition
             // 
@@ -617,7 +587,6 @@
             reportContainer.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel9.ResumeLayout(false);
-            panelViewOrder.ResumeLayout(false);
             panelLogout.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panelDashboard.ResumeLayout(false);
@@ -656,7 +625,6 @@
         private Panel panel9;
         private Button customerReportNav;
         private Panel panelViewOrder;
-        private Button orderReportNav;
         private System.Windows.Forms.Timer reportTransition;
         private Panel panelLogout;
         private Button logoutNav;

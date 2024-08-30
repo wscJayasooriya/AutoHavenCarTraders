@@ -29,23 +29,21 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_ReportCustomer));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             dateFromDate = new DateTimePicker();
             dateToDate = new DateTimePicker();
             button1 = new Button();
             btnPrint = new Button();
             dataGridView = new DataGridView();
             TLPanelTop = new TableLayoutPanel();
-            btnRefresh = new Button();
             btnAdd = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
-            button3 = new Button();
+            btnRefresh = new Button();
             panel1 = new Panel();
             label1 = new Label();
             label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
-            TLPanelTop.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -99,7 +97,8 @@
             btnPrint.TabIndex = 4;
             btnPrint.Text = "     Print";
             btnPrint.UseVisualStyleBackColor = false;
-            btnPrint.Click += this.btnPrint_Click;
+            btnPrint.Visible = false;
+            btnPrint.Click += btnPrint_Click;
             // 
             // dataGridView
             // 
@@ -111,23 +110,23 @@
             dataGridView.BorderStyle = BorderStyle.None;
             dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView.EnableHeadersVisualStyles = false;
             dataGridView.Location = new Point(53, 250);
             dataGridView.Margin = new Padding(5);
@@ -148,30 +147,11 @@
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             TLPanelTop.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            TLPanelTop.Controls.Add(btnRefresh, 1, 0);
             TLPanelTop.Location = new Point(0, 0);
             TLPanelTop.Name = "TLPanelTop";
             TLPanelTop.RowCount = 1;
             TLPanelTop.Size = new Size(200, 100);
             TLPanelTop.TabIndex = 0;
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.BackColor = Color.FromArgb(52, 73, 94);
-            btnRefresh.Cursor = Cursors.Hand;
-            btnRefresh.Dock = DockStyle.Fill;
-            btnRefresh.FlatAppearance.BorderSize = 0;
-            btnRefresh.FlatStyle = FlatStyle.Flat;
-            btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRefresh.ForeColor = Color.White;
-            btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
-            btnRefresh.Location = new Point(123, 3);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(114, 94);
-            btnRefresh.TabIndex = 1;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnRefresh.UseVisualStyleBackColor = false;
             // 
             // btnAdd
             // 
@@ -199,7 +179,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(button3, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnRefresh, 0, 0);
             tableLayoutPanel1.Controls.Add(panel1, 4, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
             tableLayoutPanel1.Location = new Point(0, 0);
@@ -211,23 +191,24 @@
             tableLayoutPanel1.Size = new Size(1575, 90);
             tableLayoutPanel1.TabIndex = 5;
             // 
-            // button3
+            // btnRefresh
             // 
-            button3.BackColor = Color.FromArgb(52, 73, 94);
-            button3.Cursor = Cursors.Hand;
-            button3.Dock = DockStyle.Fill;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Image = (Image)resources.GetObject("button3.Image");
-            button3.Location = new Point(5, 5);
-            button3.Name = "button3";
-            button3.Size = new Size(114, 80);
-            button3.TabIndex = 1;
-            button3.Text = "Refresh";
-            button3.TextImageRelation = TextImageRelation.ImageAboveText;
-            button3.UseVisualStyleBackColor = false;
+            btnRefresh.BackColor = Color.FromArgb(52, 73, 94);
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.Dock = DockStyle.Fill;
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
+            btnRefresh.Location = new Point(5, 5);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(114, 80);
+            btnRefresh.TabIndex = 1;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // panel1
             // 
@@ -278,7 +259,6 @@
             Text = "Form_ReportCustomer";
             Load += Form_ReportCustomer_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
-            TLPanelTop.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -292,10 +272,9 @@
         private Button btnPrint;
         private DataGridView dataGridView;
         private TableLayoutPanel TLPanelTop;
-        private Button btnRefresh;
         private Button btnAdd;
         private TableLayoutPanel tableLayoutPanel1;
-        private Button button3;
+        private Button btnRefresh;
         private Panel panel1;
         private Label label1;
         private Label label2;

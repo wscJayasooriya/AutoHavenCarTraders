@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders.Views
 {
@@ -32,7 +34,7 @@ namespace CarTraders.Views
 
                 if (orderDetails == null)
                 {
-                    MessageBox.Show("Order details not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.INFO, "Order details not found.");
                     return;
                 }
 
@@ -119,7 +121,7 @@ namespace CarTraders.Views
 
                 if (orderDetails == null)
                 {
-                    MessageBox.Show("Order not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.INFO, "Order not found.");
                     return;
                 }
 
@@ -130,7 +132,7 @@ namespace CarTraders.Views
                 orderDetails.ApprovedBy = approvedBy;
                 dbContext.SaveChanges();
 
-                MessageBox.Show("Order approved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Order approved successfully.");
                 this.Close();
 
 

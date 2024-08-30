@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -23,11 +24,13 @@ namespace CarTraders
         private bool isExpanding = true;
         private string hiddenCarPartId;
         private CodeGenerateUtil generateUtil;
+        private ExportDataPdfUtil exportPdfUtil;
         public string currentUser;
         public Form_CarParts(string username)
         {
             InitializeComponent();
             generateUtil = new CodeGenerateUtil();
+            exportPdfUtil = new ExportDataPdfUtil();
             pictureBoxLoading.Location = new Point((this.Width - pictureBoxLoading.Width) / 2, (this.Height - pictureBoxLoading.Height) / 2);
             currentUser = username;
         }
@@ -68,10 +71,10 @@ namespace CarTraders
 
                         if (parts == null)
                         {
-                            MessageBox.Show("Car Part not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.INFO, "Car Part not found in the database.");
                             return;
                         }
-                        MessageBox.Show("Car Part successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.DELETE, "Car Part successfully deleted in the database.");
                         parts.IsDeleted = 1;
                         parts.DeletedDate = DateTime.Now;
                         parts.DeletedBy = users.UserCode;
@@ -83,7 +86,7 @@ namespace CarTraders
                 }
                 else
                 {
-                    MessageBox.Show("Invalid Car Part ID format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.ERROR, "Invalid Car Part ID format.");
                 }
             }
 
@@ -239,14 +242,14 @@ namespace CarTraders
                     {
                         foreach (var validationResult in validationResults)
                         {
-                            MessageBox.Show(validationResult.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.ERROR, "Validation Error: " + validationResult.ErrorMessage);
                         }
                         return;
                     }
 
                     dbContext.carParts.Add(parts);
                     dbContext.SaveChanges();
-                    MessageBox.Show("Car Parts Saved Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Car Parts Saved Successfully.");
 
                     LoadCarPartsData();
                     ClearForm();
@@ -257,7 +260,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while saving car parts data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while saving car parts data: " + ex.Message);
             }
         }
 
@@ -362,7 +365,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading car parts data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while loading car parts data: " + ex.Message);
             }
         }
 
@@ -541,11 +544,11 @@ namespace CarTraders
                         existingCarPart.Image = CarPartsImageToByteArray(pictureBox.Image);
 
                         dbContext.SaveChanges();
-                        MessageBox.Show("Car Part details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.EDIT, "Car Part details updated successfully.");
                     }
                     else
                     {
-                        MessageBox.Show("Car Part not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.INFO, "Car Part not found.");
                     }
                     LoadCarPartsData();
                     ClearForm();
@@ -556,7 +559,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while modifying car part data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while modifying car part data: " + ex.Message);
             }
         }
 
@@ -586,13 +589,20 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " +ex.Message);
             }
             finally
             {
                 pictureBoxLoading.Visible = false;
                 tableCarPartView.Visible = true;
             }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            List<string> columnsToInclude = new List<string> { "CarModel", "PartName", "Color", "PartCategory", "Quantity", "Price" };
+            string reportTopic = "Car Part Details Report";
+            exportPdfUtil.ExportGridDataToPdf(tableCarPartView, "Car_Part_Details_Report", columnsToInclude, reportTopic);
         }
     }
 }

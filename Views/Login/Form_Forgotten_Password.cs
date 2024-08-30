@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -25,7 +27,7 @@ namespace CarTraders
 
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("Please enter your email address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Please enter your email address.");
                 return;
             }
             try
@@ -41,20 +43,20 @@ namespace CarTraders
                         user.OtpExpireTime = DateTime.Now.AddMinutes(5);
                         dbContext.SaveChanges();
                         await SendOtpEmailAsync(email, otp);
-                        MessageBox.Show("An OTP has been sent to your email address.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.SUCCESS, "An OTP has been sent to your email address.");
                         Form_OTP form_OTP = new Form_OTP(email);
                         form_OTP.Show();
                         this.Hide();
                     }
                     else
                     {
-                        MessageBox.Show("The entered email address does not exist in our records.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "The entered email address does not exist in our records.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while checking the email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while checking the email: " + ex.Message);
             }
         }
 
@@ -80,7 +82,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to send OTP email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Failed to send OTP email: " + ex.Message);
             }
         }
 

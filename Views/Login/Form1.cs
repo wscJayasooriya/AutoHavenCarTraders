@@ -1,8 +1,10 @@
 
 
 using CarTraders.Data;
+using CarTraders.Helpers;
 using System.Security.Cryptography;
 using System.Text;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -27,7 +29,7 @@ namespace CarTraders
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Please enter both username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.INFO, "Please enter both username and password.");
                 return;
             }
 
@@ -49,18 +51,18 @@ namespace CarTraders
                         }
                         else
                         {
-                            MessageBox.Show("Invalid credentials. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.ERROR, "Invalid credentials. Please try again.");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Invalid credentials. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Invalid credentials. Please try again.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while logging in: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while logging in: " + ex.Message);
             }
         }
         private string HashPassword(string password)

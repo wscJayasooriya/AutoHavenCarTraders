@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace CarTraders
@@ -33,14 +34,14 @@ namespace CarTraders
             var confPassword = txtConfirmPassword.Text;
             if (!validatorUtil.ValidatePassword(password))
             {
-                MessageBox.Show("Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.");
                 txtPassword.BackColor = Color.FromArgb(205, 97, 85);
                 txtConfirmPassword.BackColor = Color.FromArgb(205, 97, 85);
                 return;
             }
             if (password != confPassword)
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Passwords do not match.");
                 return;
             }
             try
@@ -55,20 +56,20 @@ namespace CarTraders
                         user.Password = HashPassword(password);
                         dbContext.SaveChanges();
 
-                        MessageBox.Show("Your Password Change Successfully. Please Login Again.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Your Password Change Successfully. Please Login Again.");
                         Form_Login form_Login = new Form_Login();
                         form_Login.Show();
                         this.Hide();
                     }
                     else
                     {
-                        MessageBox.Show("The entered email address does not exist in our records.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "The entered email address does not exist in our records.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while checking the email: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while checking the email: " + ex.Message);
             }
         }
 
@@ -87,6 +88,13 @@ namespace CarTraders
                 }
                 return builder.ToString();
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Form_Login form_Login = new Form_Login();
+            form_Login.Show();
+            this.Hide();
         }
     }
 }

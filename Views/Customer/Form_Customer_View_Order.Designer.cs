@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             dataGridView = new DataGridView();
             TLPanelTop = new TableLayoutPanel();
             panel1 = new Panel();
@@ -52,24 +52,25 @@
             dataGridView.BorderStyle = BorderStyle.None;
             dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView.Dock = DockStyle.Fill;
             dataGridView.EnableHeadersVisualStyles = false;
-            dataGridView.Location = new Point(18, 34);
+            dataGridView.Location = new Point(0, 0);
             dataGridView.MultiSelect = false;
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 62;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView.Size = new Size(1501, 605);
+            dataGridView.Size = new Size(1539, 660);
             dataGridView.TabIndex = 0;
             // 
             // TLPanelTop
@@ -113,11 +114,11 @@
             btnCompleteOrder.Cursor = Cursors.Hand;
             btnCompleteOrder.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCompleteOrder.ForeColor = Color.White;
-            btnCompleteOrder.Location = new Point(378, 85);
+            btnCompleteOrder.Location = new Point(354, 85);
             btnCompleteOrder.Name = "btnCompleteOrder";
-            btnCompleteOrder.Size = new Size(342, 60);
+            btnCompleteOrder.Size = new Size(325, 60);
             btnCompleteOrder.TabIndex = 13;
-            btnCompleteOrder.Text = "Complete Orders";
+            btnCompleteOrder.Text = "Complete  Orders";
             btnCompleteOrder.UseVisualStyleBackColor = false;
             btnCompleteOrder.Click += btnCompleteOrder_Click;
             // 
@@ -139,7 +140,7 @@
             // 
             pendingOrderCount.AutoSize = true;
             pendingOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            pendingOrderCount.Location = new Point(279, 99);
+            pendingOrderCount.Location = new Point(276, 98);
             pendingOrderCount.Name = "pendingOrderCount";
             pendingOrderCount.Size = new Size(42, 32);
             pendingOrderCount.TabIndex = 16;
@@ -149,7 +150,7 @@
             // 
             completeOrderCount.AutoSize = true;
             completeOrderCount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            completeOrderCount.Location = new Point(665, 99);
+            completeOrderCount.Location = new Point(619, 98);
             completeOrderCount.Name = "completeOrderCount";
             completeOrderCount.Size = new Size(42, 32);
             completeOrderCount.TabIndex = 17;

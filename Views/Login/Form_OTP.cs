@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -104,24 +106,24 @@ namespace CarTraders
                     {
                         if (user.OtpExpireTime >= DateTime.Now)
                         {
-                            MessageBox.Show("Verification successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Verification successful!");
                             Form_New_Password _New_Password = new Form_New_Password(userEmail);
                             _New_Password.Show();
                             this.Hide();
                         }
                         else
                         {
-                            MessageBox.Show("Verification code has expired.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.INFO, "Verification code has expired.");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Incorrect verification code.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Incorrect verification code.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.INFO, "User not found.");
                 }
             }
         }

@@ -131,7 +131,7 @@ namespace CarTraders
             if (reportExpand == false)
             {
                 reportContainer.Height += 40;
-                if (reportContainer.Height >= 240)
+                if (reportContainer.Height >= 150)
                 {
                     reportTransition.Stop();
                     reportExpand = true;
@@ -150,7 +150,6 @@ namespace CarTraders
 
         private void reportNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = reportNav.Text.Trim();
             labelNav.Text = reportNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
             carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -169,7 +168,6 @@ namespace CarTraders
 
             if (userRole == "Customer_Role")
             {
-                labelHead.Text = dashboardNav.Text.Trim();
                 labelNav.Text = dashboardNav.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(97, 106, 107);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -184,7 +182,6 @@ namespace CarTraders
             }
             else
             {
-                labelHead.Text = dashboardNav.Text.Trim();
                 labelNav.Text = dashboardNav.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(97, 106, 107);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -201,7 +198,6 @@ namespace CarTraders
 
         private void customerReportNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = customerReportNav.Text.Trim();
             labelNav.Text = customerReportNav.Text.Trim();
             OpenChildForm(new Form_ReportCustomer());
         }
@@ -222,7 +218,6 @@ namespace CarTraders
 
         private void carNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = carNav.Text.Trim();
             labelNav.Text = carNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
             carNav.BackColor = Color.FromArgb(97, 106, 107);
@@ -238,8 +233,6 @@ namespace CarTraders
 
         private void carPartsNav_Click(object sender, EventArgs e)
         {
-
-            labelHead.Text = carPartsNav.Text.Trim();
             labelNav.Text = carPartsNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
             carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -257,7 +250,6 @@ namespace CarTraders
 
         private void customerNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = customerNav.Text.Trim();
             labelNav.Text = customerNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
             carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -276,7 +268,6 @@ namespace CarTraders
 
             if (userRole == "Customer_Role")
             {
-                labelHead.Text = orderNav.Text.Trim();
                 labelNav.Text = orderNav.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -291,7 +282,6 @@ namespace CarTraders
             }
             else
             {
-                labelHead.Text = orderNav.Text.Trim();
                 labelNav.Text = orderNav.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -347,7 +337,6 @@ namespace CarTraders
 
             if (userRole == "Customer_Role")
             {
-                labelHead.Text = manageUserNave.Text.Trim();
                 labelNav.Text = manageUserNave.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -362,7 +351,6 @@ namespace CarTraders
             }
             else
             {
-                labelHead.Text = manageUserNave.Text.Trim();
                 labelNav.Text = manageUserNave.Text.Trim();
                 dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
                 carNav.BackColor = Color.FromArgb(52, 73, 94);
@@ -397,7 +385,6 @@ namespace CarTraders
 
         private void viewOrdersNav_Click(object sender, EventArgs e)
         {
-            labelHead.Text = viewOrdersNav.Text.Trim();
             labelNav.Text = viewOrdersNav.Text.Trim();
             dashboardNav.BackColor = Color.FromArgb(52, 73, 94);
             carNav.BackColor = Color.FromArgb(52, 73, 94);

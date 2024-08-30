@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using CarTraders.Model;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -24,18 +26,85 @@ namespace CarTraders
         private void Form_ReportCustomer_Load(object sender, EventArgs e)
         {
             this.ControlBox = false;
-            //LoadItemWiseSalesTable();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             DateTime fromDate = dateFromDate.Value.Date;
-            DateTime toDate = dateToDate.Value.Date;
-            selectFromDate = fromDate.ToString("yyyy-MM-dd");
-            selectToDate = toDate.ToString("yyyy-MM-dd");
+            DateTime toDate = dateToDate.Value.Date.AddDays(1).AddTicks(-1);
+            selectFromDate = fromDate.ToString("yyyy-MM-dd HH:mm:ss");
+            selectToDate = toDate.ToString("yyyy-MM-dd HH:mm:ss");
 
             LoadItemWiseSalesTable(selectFromDate, selectToDate);
 
+        }
+
+        private void LoadItemWiseSalesTable(string from_date, string to_date)
+        {
+            try
+            {
+                using (var dbContext = new ApplicationDBContext())
+                {
+
+                    var startDate = DateTime.ParseExact(from_date, "yyyy-MM-dd HH:mm:ss", null);
+                    var endDate = DateTime.ParseExact(to_date, "yyyy-MM-dd HH:mm:ss", null);
+                    var excludedItems = new List<string> { "CAR" };
+
+                    var salesQuery = dbContext.orderItemDetails
+                                        .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate && !excludedItems.Contains(o.ItemCode.Trim().ToUpper()))
+                                        .Join(dbContext.orderDetails,
+                                              o => o.OrderCode,
+                                              d => d.OrderCode,
+                                              (o, d) => new { o, d })
+                                        .Where(joined => joined.d.IsApproved == 1)
+                                        .GroupBy(joined => joined.o.ItemCode)
+                                        .Select(g => new
+                                        {
+                                            ItemCode = g.Key,
+                                            ItemName = g.Max(x => x.o.ItemName),
+                                            Price = g.Max(x => x.o.Price),
+                                            Quantity = g.Sum(x => x.o.Quantity),
+                                            TotalAmount = g.Sum(x => x.o.Quantity * x.o.Price)
+                                        }).ToList();
+
+                    if (salesQuery.Count == 0)
+                    {
+                        NotificationUtil.ShowNotification(NotificationType.INFO, "No data found for the selected date range.");
+                        dataGridView.DataSource = null;
+                        btnPrint.Visible = false;
+                        return;
+                    }
+
+                    DataTable salesTable = new DataTable();
+                    salesTable.Columns.Add("ItemCode", typeof(string));
+                    salesTable.Columns.Add("ItemName", typeof(string));
+                    salesTable.Columns.Add("Price", typeof(double));
+                    salesTable.Columns.Add("Quantity", typeof(int));
+                    salesTable.Columns.Add("Total", typeof(double));
+
+                    foreach (var sales in salesQuery)
+                    {
+                        DataRow row = salesTable.NewRow();
+                        row["ItemCode"] = sales.ItemCode;
+                        row["ItemName"] = sales.ItemName;
+                        row["Price"] = sales.Price;
+                        row["Quantity"] = sales.Quantity;
+                        row["Total"] = sales.TotalAmount;
+
+                        salesTable.Rows.Add(row);
+
+                    }
+                    dataGridView.DataSource = salesTable;
+
+                    ConfigureDataGridView();
+                    btnPrint.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while loading car data: " + ex.Message);
+                btnPrint.Visible = false;
+            }
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -107,7 +176,7 @@ namespace CarTraders
                 {
                     // Save the Excel workbook to the chosen file path
                     xlWorkbook.SaveAs(saveFileDialog.FileName);
-                    MessageBox.Show("Excel file saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Excel file saved successfully!");
                 }
 
                 // Clean up
@@ -121,58 +190,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while exporting to Excel: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void LoadItemWiseSalesTable(string from_date, string to_date)
-        {
-            try
-            {
-                using (var dbContext = new ApplicationDBContext())
-                {
-
-                    var startDate = DateTime.ParseExact(from_date, "yyyy-MM-dd", null);
-                    var endDate = DateTime.ParseExact(to_date, "yyyy-MM-dd", null);
-
-                    var salesQuery = dbContext.orderItemDetails
-                        .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
-                        .GroupBy(o => o.ItemCode)
-                        .Select(g => new
-                        {
-                            ItemCode = g.Key,
-                            ItemName = g.Max(x => x.ItemName), // Ensure not null if inconsistent
-                            Price = g.Max(x => x.Price),       // Ensure not null if inconsistent
-                            Quantity = g.Sum(x => x.Quantity),
-                            TotalAmount = g.Sum(x => x.Quantity * x.Price)
-                        }).ToList();
-
-                    DataTable salesTable = new DataTable();
-                    salesTable.Columns.Add("ItemCode", typeof(string));
-                    salesTable.Columns.Add("ItemName", typeof(string));
-                    salesTable.Columns.Add("Price", typeof(double));
-                    salesTable.Columns.Add("Quantity", typeof(int));
-                    salesTable.Columns.Add("Total", typeof(double));
-
-                    foreach (var sales in salesQuery)
-                    {
-                        DataRow row = salesTable.NewRow();
-                        row["ItemCode"] = sales.ItemCode;
-                        row["ItemName"] = sales.ItemName;
-                        row["Price"] = sales.Price;
-                        row["Quantity"] = sales.Quantity;
-                        row["Total"] = sales.TotalAmount;
-
-                        salesTable.Rows.Add(row);
-
-                    }
-                    dataGridView.DataSource = salesTable;
-
-                    ConfigureDataGridView();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while loading car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while exporting to Excel: " + ex.Message);
             }
         }
 
@@ -211,6 +229,14 @@ namespace CarTraders
             dataGridView.Columns["Price"].HeaderText = "Price";
             dataGridView.Columns["Quantity"].HeaderText = "Quantity";
             dataGridView.Columns["Total"].HeaderText = "Total Amount";
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            dateFromDate.Value = DateTime.Now;
+            dateToDate.Value = DateTime.Now;
+            dataGridView.DataSource = null;
+            btnPrint.Visible = false;
         }
     }
 }

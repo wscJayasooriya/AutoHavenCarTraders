@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using CarTraders.Model;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders.Views
 {
@@ -87,6 +89,7 @@ namespace CarTraders.Views
                     pendingOrderTable.Columns.Add("ApprovedDate", typeof(DateTime));
                     pendingOrderTable.Columns.Add("DeliveredDate", typeof(DateTime));
                     pendingOrderTable.Columns.Add("ApprovedBy", typeof(string));
+                    pendingOrderTable.Columns.Add("OrderType", typeof(string));
 
                     foreach (var pendingOrder in pendingOrders)
                     {
@@ -106,6 +109,7 @@ namespace CarTraders.Views
                         row["ApprovedDate"] = pendingOrder.ApprovedDate;
                         row["DeliveredDate"] = pendingOrder.DeliveredDate;
                         row["ApprovedBy"] = pendingOrder.ApprovedBy;
+                        row["OrderType"] = pendingOrder.OrderType;
 
                         pendingOrderTable.Rows.Add(row);
                     }
@@ -157,7 +161,7 @@ namespace CarTraders.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while loading car data: " + ex.Message);
             }
         }
 
@@ -183,27 +187,31 @@ namespace CarTraders.Views
             dataGridView.Columns["DeliveredDate"].Visible = false;
             dataGridView.Columns["ApprovedBy"].Visible = false;
 
-            dataGridView.Columns["OrderDate"].Width = 230;
+            dataGridView.Columns["OrderDate"].Width = 200;
             dataGridView.Columns["OrderDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["OrderDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["OrderDate"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["ApprovedDate"].Width = 230;
+            dataGridView.Columns["ApprovedDate"].Width = 200;
             dataGridView.Columns["ApprovedDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["ApprovedDate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["ApprovedDate"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["OrderCode"].Width = 200;
+            dataGridView.Columns["OrderCode"].Width = 150;
             dataGridView.Columns["OrderCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["OrderCode"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["OrderCode"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["CustomerCode"].Width = 200;
+            dataGridView.Columns["CustomerCode"].Width = 150;
             dataGridView.Columns["CustomerCode"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["CustomerCode"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["CustomerCode"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["OrderStatus"].Width = 200;
+            dataGridView.Columns["OrderStatus"].Width = 180;
             dataGridView.Columns["OrderStatus"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["OrderStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["OrderStatus"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView.Columns["GrossAmount"].Width = 200;
+            dataGridView.Columns["OrderType"].Width = 180;
+            dataGridView.Columns["OrderType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridView.Columns["OrderType"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns["OrderType"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView.Columns["GrossAmount"].Width = 180;
             dataGridView.Columns["GrossAmount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             dataGridView.Columns["GrossAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView.Columns["GrossAmount"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -214,6 +222,7 @@ namespace CarTraders.Views
             dataGridView.Columns["CustomerCode"].HeaderText = "Customer Code";
             dataGridView.Columns["OrderStatus"].HeaderText = "Status";
             dataGridView.Columns["GrossAmount"].HeaderText = "Gross Amount (Rs)";
+            dataGridView.Columns["OrderType"].HeaderText = "Order Type";
 
             dataGridView.RowTemplate.Height = 75;
 
@@ -268,5 +277,9 @@ namespace CarTraders.Views
             }
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

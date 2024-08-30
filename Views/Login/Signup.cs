@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -47,14 +48,14 @@ namespace CarTraders
 
             if (!validatorUtil.ValidatePassword(password))
             {
-                MessageBox.Show("Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.INFO, "Password must be at least 8 characters long and include uppercase, lowercase, numbers, and symbols.");
                 txtPassword.BackColor = Color.FromArgb(205, 97, 85);
                 txtReEnterPassword.BackColor = Color.FromArgb(205, 97, 85);
                 return;
             }
             if (password != rePassword)
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.INFO, "Passwords do not match.");
                 return;
             }
 
@@ -66,7 +67,7 @@ namespace CarTraders
 
                     if (setImage == null)
                     {
-                        MessageBox.Show("Default image not found. Please contact support.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Default image not found. Please contact support.");
                         return;
                     }
 
@@ -91,7 +92,7 @@ namespace CarTraders
 
                     dbContext.users.Add(user);
                     dbContext.SaveChanges();
-                    MessageBox.Show("Registration successfully. Please Login Now!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Registration successfully. Please Login Now!");
                     Form_Login form_Login = new Form_Login();
                     form_Login.Show();
                     this.Hide();
@@ -101,7 +102,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while saving customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while saving customer data: " + ex.Message);
             }
         }
 

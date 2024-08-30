@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static CarTraders.Form_Orders;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -52,7 +53,7 @@ namespace CarTraders
                 }
                 else
                 {
-                    MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.ERROR, "User not found.");
                 }
             }
         }
@@ -68,17 +69,25 @@ namespace CarTraders
             foreach (var item in cartItems)
             {
                 var partDetails = item.Value;
-
                 DataRow row = carPartsTable.NewRow();
-                row["Image"] = partDetails.PartImage;
-                row["Name"] = partDetails.PartName;
-                row["Quantity"] = partDetails.Quantity;
-                row["Price"] = partDetails.Price;
 
+                if (partDetails.Value == "car")
+                {
+                    row["Name"] = partDetails.CarModel; // Display car model name
+                    row["Quantity"] = 1; // Set quantity to 1 for cars (if applicable)
+                    row["Price"] = partDetails.Price; // Display car price // Hide quantity column if not needed
+                }
+                else
+                {
+                    row["Name"] = partDetails.PartName; // Display part name
+                    row["Quantity"] = partDetails.Quantity; // Display part quantity
+                    row["Price"] = partDetails.Price; // Display part price
+                }
+
+                row["Image"] = partDetails.PartImage; // Display image for both cars and parts
                 carPartsTable.Rows.Add(row);
-
-
             }
+
             dataView.DataSource = carPartsTable;
 
             ConfigureDataGridView();
@@ -128,7 +137,7 @@ namespace CarTraders
         {
             if (cartItems.Count == 0)
             {
-                MessageBox.Show("Your cart is empty. Please add items to your cart before placing an order.", "Cart Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                NotificationUtil.ShowNotification(NotificationType.WARN, "Your cart is empty. Please add items to your cart before placing an order.");
                 return;
             }
 
@@ -155,7 +164,8 @@ namespace CarTraders
                     Is_active = 1,
                     OrderDate = DateTime.Now,
                     DeliveredDate = DateTime.Now.AddDays(5),
-                    ApprovedBy = "Not Approved"
+                    ApprovedBy = "Not Approved",
+                    OrderType = "Car Part"
                 };
 
                 double grossAmount = 0.0;
@@ -163,30 +173,58 @@ namespace CarTraders
                 foreach (var item in cartItems)
                 {
                     var partDetails = item.Value;
-                    var carPart = dbContext.carParts.First(cp => cp.Id == item.Key);
-
-                    // Create a new OrderItemDetails object
-                    var orderItemDetail = new OrderItemDetails
+                    if (partDetails.Value == "car")
                     {
-                        Id = Guid.NewGuid(),
-                        OrderCode = orderCode,
-                        ItemCode = carPart.CarPartCode,
-                        ItemName = carPart.PartName,
-                        Price = carPart.Price,
-                        Quantity = partDetails.Quantity,
-                        TotalAmount = carPart.Price * partDetails.Quantity,
-                        OrderDate = DateTime.Now
-                    };
+                        var car = dbContext.cars.First(c => c.Id == item.Key);
+                        var orderItemDetail = new OrderItemDetails
+                        {
+                            Id = Guid.NewGuid(),
+                            OrderCode = orderCode,
+                            ItemCode = car.CarCode, // Assuming you have a CarCode or similar identifier for cars
+                            ItemName = car.CarModel,
+                            Price = car.Price,
+                            Quantity = 1, // Quantity is 1 for cars
+                            TotalAmount = car.Price,
+                            OrderDate = DateTime.Now
+                        };
 
-                    // Calculate the gross amount for the order
-                    grossAmount += orderItemDetail.TotalAmount;
+                        // Calculate the gross amount for the order
+                        grossAmount += orderItemDetail.TotalAmount;
 
-                    // Add the OrderItemDetails object to the OrderDetails
-                    orderDetail.ItemDetails.Add(orderItemDetail);
+                        // Add the OrderItemDetails object to the OrderDetails
+                        orderDetail.ItemDetails.Add(orderItemDetail);
+                        car.Status = 0;
+                        dbContext.cars.Update(car);
+                        orderDetail.OrderType = "Car";
+                    }
+                    else
+                    {
+                        var carPart = dbContext.carParts.First(cp => cp.Id == item.Key);
 
-                    // Update car part stock
-                    carPart.Quantity -= partDetails.Quantity;
-                    dbContext.carParts.Update(carPart);
+                        // Create a new OrderItemDetails object
+                        var orderItemDetail = new OrderItemDetails
+                        {
+                            Id = Guid.NewGuid(),
+                            OrderCode = orderCode,
+                            ItemCode = carPart.CarPartCode,
+                            ItemName = carPart.PartName,
+                            Price = carPart.Price,
+                            Quantity = partDetails.Quantity,
+                            TotalAmount = carPart.Price * partDetails.Quantity,
+                            OrderDate = DateTime.Now
+                        };
+
+                        // Calculate the gross amount for the order
+                        grossAmount += orderItemDetail.TotalAmount;
+
+                        // Add the OrderItemDetails object to the OrderDetails
+                        orderDetail.ItemDetails.Add(orderItemDetail);
+
+                        // Update car part stock
+                        carPart.Quantity -= partDetails.Quantity;
+                        dbContext.carParts.Update(carPart);
+                    }
+
                 }
                 orderDetail.GrossAmount = grossAmount;
 
@@ -212,7 +250,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " + ex.Message);
             }
             finally
             {

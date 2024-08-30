@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders
 {
@@ -27,12 +28,14 @@ namespace CarTraders
         public string currentUser;
 
         private CodeGenerateUtil generateUtil;
+        private ExportDataPdfUtil exportPdfUtil;
 
 
         public Form_Cars(string username)
         {
             InitializeComponent();
             generateUtil = new CodeGenerateUtil();
+            exportPdfUtil = new ExportDataPdfUtil();
             pictureBoxLoading.Location = new Point((this.Width - pictureBoxLoading.Width) / 2, (this.Height - pictureBoxLoading.Height) / 2);
             currentUser = username;
         }
@@ -175,7 +178,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while loading car data: " + ex.Message);
             }
         }
 
@@ -323,10 +326,10 @@ namespace CarTraders
 
                         if (car == null)
                         {
-                            MessageBox.Show("Car not found in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.INFO, "Car not found in the database.");
                             return;
                         }
-                        MessageBox.Show("Car successfully deleted in the database.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.DELETE, "Car successfully deleted in the database.");
                         car.IsDeleted = 1;
                         car.DeletedDate = DateTime.Now;
                         car.DeletedBy = user.UserCode;
@@ -338,7 +341,7 @@ namespace CarTraders
                 }
                 else
                 {
-                    MessageBox.Show("Invalid car ID format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.ERROR, "Invalid car ID format.");
                 }
             }
 
@@ -533,7 +536,7 @@ namespace CarTraders
                 ownerContact = txtOwnerContact.Text;
                 if (!DateTime.TryParse(dateRegistration.Text, out registrationDateTime))
                 {
-                    MessageBox.Show("Invalid registration date. Please enter a valid date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    NotificationUtil.ShowNotification(NotificationType.INFO, "Invalid registration date. Please enter a valid date.");
                     return;
                 }
             }
@@ -575,7 +578,7 @@ namespace CarTraders
 
                     dbContext.cars.Add(car);
                     dbContext.SaveChanges();
-                    MessageBox.Show("Car Saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    NotificationUtil.ShowNotification(NotificationType.SUCCESS, "Car Saved successfully.");
 
                     LoadCarData();
                     ClearForm();
@@ -586,7 +589,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while saving car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while saving car data: " + ex.Message);
             }
         }
 
@@ -684,7 +687,7 @@ namespace CarTraders
                         DateTime registrationDateTime;
                         if (!DateTime.TryParse(dateRegistration.Text, out registrationDateTime))
                         {
-                            MessageBox.Show("Invalid registration date. Please enter a valid date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            NotificationUtil.ShowNotification(NotificationType.INFO, "Invalid registration date. Please enter a valid date.");
                             return;
                         }
                         existingCar.RegistrationDate = registrationDateTime;
@@ -693,11 +696,11 @@ namespace CarTraders
                         existingCar.UpdateDate = DateTime.Now;
 
                         dbContext.SaveChanges();
-                        MessageBox.Show("Car details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.EDIT, "Car details updated successfully.");
                     }
                     else
                     {
-                        MessageBox.Show("Car not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.INFO, "Car not found.");
                     }
                     LoadCarData();
                     ClearForm();
@@ -708,7 +711,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while saving car data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while saving car data: " + ex.Message);
             }
         }
 
@@ -731,7 +734,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}");
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " +ex.Message);
             }
             finally
             {
@@ -745,6 +748,13 @@ namespace CarTraders
             txtSearch.Clear();
             ClearForm();
             LoadCarData();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            List<string> columnsToInclude = new List<string> { "CarModel", "ManufactureYear", "EngineType", "FuelType", "Condition", "Color", "Price" };
+            string reportTopic = "Car Details Report";
+            exportPdfUtil.ExportGridDataToPdf(tableCarView, "Car_Details_Report", columnsToInclude, reportTopic);
         }
     }
 }

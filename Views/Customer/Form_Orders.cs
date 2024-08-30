@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace CarTraders
@@ -22,8 +23,10 @@ namespace CarTraders
         {
             public int Quantity { get; set; }
             public string PartName { get; set; }
+            public string Value { get; set; }
+            public string CarModel { get; set; }
             public decimal Price { get; set; }
-            public Image PartImage { get; set; } // Optional, if you want to show the image on checkout
+            public Image PartImage { get; set; }
         }
 
         private Dictionary<Guid, CarPartDetails> cartItems = new Dictionary<Guid, CarPartDetails>();
@@ -88,7 +91,7 @@ namespace CarTraders
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading image for {car.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {car.CarModel}: {ex.Message}");
                         pictureBox.Image = null;
                     }
                     pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -195,7 +198,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading image for {car.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {car.CarModel}: {ex.Message}");
                 pictureBox.Image = null;
             }
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -304,7 +307,7 @@ namespace CarTraders
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error loading image for {part.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {part.CarModel}: {ex.Message}");
                         pictureBox.Image = null;
                     }
                     pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -432,7 +435,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading image for {part.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: "+ $"Error loading image for {part.CarModel}: {ex.Message}");
                 pictureBox.Image = null;
             }
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -506,6 +509,19 @@ namespace CarTraders
 
         private void DisplayCarInCartPanel(Car car)
         {
+            if (!cartItems.ContainsKey(car.Id))
+            {
+                cartItems.Add(car.Id, new CarPartDetails
+                {
+                    Quantity = 1,
+                    CarModel = car.CarModel,
+                    Price = (decimal)car.Price,
+                    PartImage = ByteArrayToImage(car.Image),
+                    Value = "car"  // Ensure this Value field is set correctly to identify it as a car
+                });
+            }
+
+
             btnPartPlaceOrder.Text = "Inquire Car";
             // Clear existing controls from the cartPanel
             carPartPanel.Controls.Clear();
@@ -518,7 +534,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading image for {car.CarModel}: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {car.CarModel}: {ex.Message}");
                 pictureBox.Image = null;
             }
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -601,6 +617,7 @@ namespace CarTraders
 
         private void DisplayCarPartInCartPanel(CarParts part)
         {
+            btnPartPlaceOrder.Text = "Place Order";
             cartPanel.BorderStyle = BorderStyle.FixedSingle;
 
             // Check if the item is already in the cart
@@ -615,7 +632,8 @@ namespace CarTraders
                     Quantity = 1,
                     PartName = part.PartName,
                     Price = (decimal)part.Price,
-                    PartImage = ByteArrayToImage(part.Image) // Assuming you have a method to convert byte array to image
+                    PartImage = ByteArrayToImage(part.Image),
+                    Value ="part"
                 });
             }
 

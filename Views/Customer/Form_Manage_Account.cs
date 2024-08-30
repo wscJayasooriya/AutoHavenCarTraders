@@ -1,4 +1,5 @@
 ﻿using CarTraders.Data;
+using CarTraders.Helpers;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static CarTraders.Helpers.NotificationUtil;
 
 namespace CarTraders.Views.Customer
 {
@@ -59,7 +61,7 @@ namespace CarTraders.Views.Customer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while loading customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while loading customer data: " + ex.Message);
             }
         }
 
@@ -101,7 +103,7 @@ namespace CarTraders.Views.Customer
                         existingUser.Image = UserImageToByteArray(pictureBox.Image);
 
                         dbContext.SaveChanges();
-                        MessageBox.Show("User details updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        NotificationUtil.ShowNotification(NotificationType.EDIT, "User details updated successfully.");
                         LoadData(txtUsername.Text);
                     }
 
@@ -110,7 +112,7 @@ namespace CarTraders.Views.Customer
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while modifying customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while modifying customer data: " + ex.Message);
             }
 
         }
@@ -140,6 +142,11 @@ namespace CarTraders.Views.Customer
                 }
                 return ms.ToArray();
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
