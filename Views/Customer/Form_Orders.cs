@@ -435,7 +435,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: "+ $"Error loading image for {part.CarModel}: {ex.Message}");
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {part.CarModel}: {ex.Message}");
                 pictureBox.Image = null;
             }
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -633,7 +633,7 @@ namespace CarTraders
                     PartName = part.PartName,
                     Price = (decimal)part.Price,
                     PartImage = ByteArrayToImage(part.Image),
-                    Value ="part"
+                    Value = "part"
                 });
             }
 

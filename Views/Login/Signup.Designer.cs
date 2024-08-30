@@ -154,6 +154,7 @@
             txtReEnterPassword.Name = "txtReEnterPassword";
             txtReEnterPassword.Size = new Size(464, 28);
             txtReEnterPassword.TabIndex = 18;
+            txtReEnterPassword.UseSystemPasswordChar = true;
             // 
             // panel5
             // 
@@ -172,6 +173,7 @@
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(464, 28);
             txtPassword.TabIndex = 16;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // panel6
             // 

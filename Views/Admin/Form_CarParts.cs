@@ -589,7 +589,7 @@ namespace CarTraders
             }
             catch (Exception ex)
             {
-                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " +ex.Message);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred: " + ex.Message);
             }
             finally
             {

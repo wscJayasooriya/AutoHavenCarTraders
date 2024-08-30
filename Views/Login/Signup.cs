@@ -21,9 +21,12 @@ namespace CarTraders
     public partial class Signup : Form
     {
         private ValidatorUtil validatorUtil;
+        private CodeGenerateUtil generateUtil;
+
         public Signup()
         {
             validatorUtil = new ValidatorUtil();
+            generateUtil = new CodeGenerateUtil();
             InitializeComponent();
         }
 
@@ -70,24 +73,28 @@ namespace CarTraders
                         NotificationUtil.ShowNotification(NotificationType.ERROR, "Default image not found. Please contact support.");
                         return;
                     }
-
+                    var userRole = "Customer_Role";
+                    var userCode = generateUtil.GetNextUserCode(userRole);
 
                     var user = new Users
                     {
-                        FirstName = "Not Set",
-                        LastName = "Not Set",
-                        ContactNo = "Not Set",
-                        City = "Not Set",
-                        Nic = "Not Set",
-                        Address = "Not Set",
-                        UserRole = "Customer_Role",
+                        FirstName = "",
+                        LastName = "",
+                        ContactNo = "",
+                        City = "",
+                        Nic = "",
+                        Address = "",
+                        UserRole = userRole,
+                        UserCode = userCode,
                         Email = email,
                         Username = username,
                         Password = HashPassword(password),
                         Status = 1,
                         CreateDate = DateTime.Now,
                         Image = setImage.Image,
-                        Department = "Not Set"
+                        Department = "",
+                        IsDeleted = 0,
+                        DeletedBy = ""
                     };
 
                     dbContext.users.Add(user);
