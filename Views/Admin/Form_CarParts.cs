@@ -217,7 +217,7 @@ namespace CarTraders
             {
                 using (var dbContext = new ApplicationDBContext())
                 {
-                    var carPartCode = generateUtil.GetNextCarCode();
+                    var carPartCode = generateUtil.GetNextCarPartCode();
 
                     var parts = new CarParts
                     {
@@ -233,7 +233,9 @@ namespace CarTraders
                         Status = 1,
                         CarPartCode = carPartCode,
                         CreateDate = DateTime.Now,
-                        Image = CarPartsImageToByteArray(pictureBox.Image)
+                        Image = CarPartsImageToByteArray(pictureBox.Image),
+                        DeletedBy = "",
+                        IsDeleted = 0
                     };
 
                     var validationResults = new List<ValidationResult>();

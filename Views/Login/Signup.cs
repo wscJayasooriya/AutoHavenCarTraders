@@ -129,32 +129,5 @@ namespace CarTraders
                 return builder.ToString();
             }
         }
-
-        private byte[] UserImageToByteArray(Image image)
-        {
-            using (var ms = new MemoryStream())
-            {
-                using (var clonedImage = new Bitmap(image))
-                {
-                    ImageFormat format = image.RawFormat;
-
-                    if (ImageFormat.Jpeg.Equals(format))
-                        format = ImageFormat.Jpeg;
-                    else if (ImageFormat.Png.Equals(format))
-                        format = ImageFormat.Png;
-                    else if (ImageFormat.Bmp.Equals(format))
-                        format = ImageFormat.Bmp;
-                    else if (ImageFormat.Gif.Equals(format))
-                        format = ImageFormat.Gif;
-                    else if (ImageFormat.Tiff.Equals(format))
-                        format = ImageFormat.Tiff;
-                    else
-                        format = ImageFormat.Png;
-
-                    clonedImage.Save(ms, format);
-                }
-                return ms.ToArray();
-            }
-        }
     }
 }

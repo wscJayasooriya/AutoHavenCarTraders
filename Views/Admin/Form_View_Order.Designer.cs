@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            labelStatus = new Label();
+            txtChangeAmount = new TextBox();
+            labelChangeAmount = new Label();
+            txtPaidAmount = new TextBox();
+            labelPaidAmount = new Label();
+            btnPayment = new Button();
+            btnReject = new Button();
             button2 = new Button();
             button1 = new Button();
             txtGrossAmount = new TextBox();
@@ -53,6 +60,13 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(244, 246, 246);
+            panel1.Controls.Add(labelStatus);
+            panel1.Controls.Add(txtChangeAmount);
+            panel1.Controls.Add(labelChangeAmount);
+            panel1.Controls.Add(txtPaidAmount);
+            panel1.Controls.Add(labelPaidAmount);
+            panel1.Controls.Add(btnPayment);
+            panel1.Controls.Add(btnReject);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(txtGrossAmount);
@@ -66,8 +80,95 @@
             panel1.Controls.Add(label1);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(762, 802);
+            panel1.Size = new Size(762, 868);
             panel1.TabIndex = 0;
+            // 
+            // labelStatus
+            // 
+            labelStatus.AutoSize = true;
+            labelStatus.BackColor = Color.FromArgb(0, 192, 0);
+            labelStatus.FlatStyle = FlatStyle.Flat;
+            labelStatus.Font = new Font("Times New Roman", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelStatus.ForeColor = Color.White;
+            labelStatus.Location = new Point(37, 15);
+            labelStatus.Name = "labelStatus";
+            labelStatus.Size = new Size(47, 23);
+            labelStatus.TabIndex = 17;
+            labelStatus.Text = "Paid";
+            // 
+            // txtChangeAmount
+            // 
+            txtChangeAmount.Enabled = false;
+            txtChangeAmount.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtChangeAmount.ForeColor = Color.FromArgb(52, 73, 94);
+            txtChangeAmount.Location = new Point(464, 702);
+            txtChangeAmount.Name = "txtChangeAmount";
+            txtChangeAmount.Size = new Size(280, 34);
+            txtChangeAmount.TabIndex = 16;
+            txtChangeAmount.Visible = false;
+            // 
+            // labelChangeAmount
+            // 
+            labelChangeAmount.AutoSize = true;
+            labelChangeAmount.Font = new Font("Times New Roman", 10F);
+            labelChangeAmount.Location = new Point(464, 670);
+            labelChangeAmount.Name = "labelChangeAmount";
+            labelChangeAmount.Size = new Size(133, 22);
+            labelChangeAmount.TabIndex = 15;
+            labelChangeAmount.Text = "Change Amount";
+            labelChangeAmount.Visible = false;
+            // 
+            // txtPaidAmount
+            // 
+            txtPaidAmount.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtPaidAmount.ForeColor = Color.FromArgb(52, 73, 94);
+            txtPaidAmount.Location = new Point(464, 619);
+            txtPaidAmount.Name = "txtPaidAmount";
+            txtPaidAmount.Size = new Size(280, 34);
+            txtPaidAmount.TabIndex = 14;
+            txtPaidAmount.Visible = false;
+            txtPaidAmount.TextChanged += txtPaidAmount_TextChanged;
+            // 
+            // labelPaidAmount
+            // 
+            labelPaidAmount.AutoSize = true;
+            labelPaidAmount.Font = new Font("Times New Roman", 10F);
+            labelPaidAmount.Location = new Point(464, 587);
+            labelPaidAmount.Name = "labelPaidAmount";
+            labelPaidAmount.Size = new Size(111, 22);
+            labelPaidAmount.TabIndex = 13;
+            labelPaidAmount.Text = "Paid Amount";
+            labelPaidAmount.Visible = false;
+            // 
+            // btnPayment
+            // 
+            btnPayment.BackColor = Color.FromArgb(52, 73, 94);
+            btnPayment.Cursor = Cursors.Hand;
+            btnPayment.FlatStyle = FlatStyle.Flat;
+            btnPayment.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPayment.ForeColor = Color.White;
+            btnPayment.Location = new Point(37, 773);
+            btnPayment.Name = "btnPayment";
+            btnPayment.Size = new Size(194, 60);
+            btnPayment.TabIndex = 12;
+            btnPayment.Text = "Payment Order";
+            btnPayment.UseVisualStyleBackColor = false;
+            btnPayment.Visible = false;
+            btnPayment.Click += btnPayment_Click;
+            // 
+            // btnReject
+            // 
+            btnReject.BackColor = Color.Red;
+            btnReject.FlatStyle = FlatStyle.Flat;
+            btnReject.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnReject.ForeColor = Color.White;
+            btnReject.Location = new Point(432, 773);
+            btnReject.Name = "btnReject";
+            btnReject.Size = new Size(112, 60);
+            btnReject.TabIndex = 11;
+            btnReject.Text = "Reject";
+            btnReject.UseVisualStyleBackColor = false;
+            btnReject.Click += btnReject_Click;
             // 
             // button2
             // 
@@ -76,9 +177,9 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(348, 708);
+            button2.Location = new Point(550, 773);
             button2.Name = "button2";
-            button2.Size = new Size(243, 75);
+            button2.Size = new Size(194, 60);
             button2.TabIndex = 10;
             button2.Text = "Approve Order";
             button2.UseVisualStyleBackColor = false;
@@ -91,11 +192,11 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(610, 708);
+            button1.Location = new Point(718, 4);
             button1.Name = "button1";
-            button1.Size = new Size(134, 75);
+            button1.Size = new Size(41, 40);
             button1.TabIndex = 9;
-            button1.Text = "Close";
+            button1.Text = "X";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
@@ -104,7 +205,7 @@
             txtGrossAmount.Enabled = false;
             txtGrossAmount.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtGrossAmount.ForeColor = Color.FromArgb(52, 73, 94);
-            txtGrossAmount.Location = new Point(464, 620);
+            txtGrossAmount.Location = new Point(37, 619);
             txtGrossAmount.Name = "txtGrossAmount";
             txtGrossAmount.Size = new Size(280, 34);
             txtGrossAmount.TabIndex = 8;
@@ -113,7 +214,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Times New Roman", 10F);
-            label4.Location = new Point(464, 588);
+            label4.Location = new Point(37, 587);
             label4.Name = "label4";
             label4.Size = new Size(122, 22);
             label4.TabIndex = 7;
@@ -127,7 +228,7 @@
             panelOrderMain.Controls.Add(label9);
             panelOrderMain.Controls.Add(label7);
             panelOrderMain.Controls.Add(label8);
-            panelOrderMain.Location = new Point(37, 253);
+            panelOrderMain.Location = new Point(37, 285);
             panelOrderMain.Name = "panelOrderMain";
             panelOrderMain.Size = new Size(707, 267);
             panelOrderMain.TabIndex = 6;
@@ -197,7 +298,7 @@
             txtInvoiceDate.Enabled = false;
             txtInvoiceDate.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceDate.ForeColor = Color.FromArgb(52, 73, 94);
-            txtInvoiceDate.Location = new Point(464, 70);
+            txtInvoiceDate.Location = new Point(464, 102);
             txtInvoiceDate.Name = "txtInvoiceDate";
             txtInvoiceDate.Size = new Size(280, 34);
             txtInvoiceDate.TabIndex = 5;
@@ -206,7 +307,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Times New Roman", 10F);
-            label3.Location = new Point(464, 38);
+            label3.Location = new Point(464, 70);
             label3.Name = "label3";
             label3.Size = new Size(101, 22);
             label3.TabIndex = 4;
@@ -217,7 +318,7 @@
             txtCustomer.Enabled = false;
             txtCustomer.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtCustomer.ForeColor = Color.FromArgb(52, 73, 94);
-            txtCustomer.Location = new Point(37, 150);
+            txtCustomer.Location = new Point(37, 182);
             txtCustomer.Name = "txtCustomer";
             txtCustomer.Size = new Size(280, 34);
             txtCustomer.TabIndex = 3;
@@ -226,7 +327,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Times New Roman", 10F);
-            label2.Location = new Point(37, 117);
+            label2.Location = new Point(37, 149);
             label2.Name = "label2";
             label2.Size = new Size(85, 22);
             label2.TabIndex = 2;
@@ -237,7 +338,7 @@
             txtInvoiceNo.Enabled = false;
             txtInvoiceNo.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNo.ForeColor = Color.FromArgb(52, 73, 94);
-            txtInvoiceNo.Location = new Point(37, 71);
+            txtInvoiceNo.Location = new Point(37, 103);
             txtInvoiceNo.Name = "txtInvoiceNo";
             txtInvoiceNo.Size = new Size(280, 34);
             txtInvoiceNo.TabIndex = 1;
@@ -246,7 +347,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 10F);
-            label1.Location = new Point(37, 38);
+            label1.Location = new Point(37, 70);
             label1.Name = "label1";
             label1.Size = new Size(88, 22);
             label1.TabIndex = 0;
@@ -257,7 +358,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(171, 235, 198);
-            ClientSize = new Size(786, 826);
+            ClientSize = new Size(786, 896);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form_View_Order";
@@ -290,5 +391,12 @@
         private Label label5;
         private Label label10;
         private Button button2;
+        private Button btnReject;
+        private Button btnPayment;
+        private Label labelStatus;
+        private TextBox txtChangeAmount;
+        private Label labelChangeAmount;
+        private TextBox txtPaidAmount;
+        private Label labelPaidAmount;
     }
 }

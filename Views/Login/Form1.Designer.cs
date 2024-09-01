@@ -44,6 +44,7 @@
             panel2 = new Panel();
             label1 = new Label();
             pictureBox1 = new PictureBox();
+            button1 = new Button();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -54,6 +55,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(groupBox1);
             panel1.Dock = DockStyle.Right;
             panel1.Location = new Point(452, 5);
@@ -227,6 +229,21 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // button1
+            // 
+            button1.BackColor = Color.Red;
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(624, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(41, 40);
+            button1.TabIndex = 10;
+            button1.Text = "X";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // Form_Login
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -270,5 +287,6 @@
         private TextBox txtUserName;
         private Button btnRegister;
         private Label lblForgot;
+        private Button button1;
     }
 }

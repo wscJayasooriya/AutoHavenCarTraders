@@ -85,5 +85,10 @@ namespace CarTraders
             form_Forgotten.Show();
             this.Hide();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

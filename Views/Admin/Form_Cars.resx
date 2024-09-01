@@ -326,6 +326,9 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>
+  <metadata name="TimerAdd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>238, 17</value>
+  </metadata>
   <data name="pictureBoxLoading.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         R0lGODlhAAIAAvdxABcXfhcXfxgYfRgYfhgYfxkZfhkZfyMhiCMhiSIiiCIiiSMiiCMiiSQiiSMjiSsr
@@ -1571,7 +1574,4 @@
         n6ov+33upl/bMv6pVMMGfd4Co2CAAQEAOw==
 </value>
   </data>
-  <metadata name="TimerAdd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>238, 17</value>
-  </metadata>
 </root>

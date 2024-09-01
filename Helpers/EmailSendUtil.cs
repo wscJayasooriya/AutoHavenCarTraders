@@ -16,7 +16,7 @@ namespace CarTraders.Helpers
             {
                 using (MailMessage mail = new MailMessage())
                 {
-                    mail.From = new MailAddress("jayasooriya114@gmail.com");
+                    mail.From = new MailAddress("cartraders.abc@gmail.com");
                     mail.To.Add(email);
                     mail.Subject = "Your OTP Code";
                     mail.Body = $"Your OTP code is {otp}. It will expire in 5 minutes.";
@@ -24,7 +24,7 @@ namespace CarTraders.Helpers
 
                     using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                     {
-                        smtp.Credentials = new System.Net.NetworkCredential("jayasooriya114@gmail.com", "ikip woac rjgz pjso");
+                        smtp.Credentials = new System.Net.NetworkCredential("cartraders.abc@gmail.com", "vsfw pevw zlxp rsxz");
                         smtp.EnableSsl = true;
                         await smtp.SendMailAsync(mail);
                     }
@@ -40,6 +40,32 @@ namespace CarTraders.Helpers
         {
             Random random = new Random();
             return random.Next(100000, 999999);
+        }
+
+        public async Task SendOtpEmailOrderAction(string email, string subject, string body)
+        {
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("cartraders.abc@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = subject;
+                    mail.Body = body;
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new System.Net.NetworkCredential("cartraders.abc@gmail.com", "vsfw pevw zlxp rsxz");
+                        smtp.EnableSsl = true;
+                        await smtp.SendMailAsync(mail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Failed to send OTP email: " + ex.Message);
+            }
         }
     }
 }

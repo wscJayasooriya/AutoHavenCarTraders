@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Cars));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             panel1 = new Panel();
             panel2 = new Panel();
             txtSearch = new TextBox();
@@ -421,7 +421,7 @@
             comboCondition.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboCondition.FormattingEnabled = true;
             comboCondition.Items.AddRange(new object[] { "Brand New", "Used" });
-            comboCondition.Location = new Point(27, 916);
+            comboCondition.Location = new Point(27, 395);
             comboCondition.Name = "comboCondition";
             comboCondition.Size = new Size(252, 38);
             comboCondition.TabIndex = 19;
@@ -433,7 +433,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(29, 881);
+            label9.Location = new Point(29, 364);
             label9.Name = "label9";
             label9.Size = new Size(99, 28);
             label9.TabIndex = 18;
@@ -527,7 +527,7 @@
             // txtColor
             // 
             txtColor.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtColor.Location = new Point(27, 542);
+            txtColor.Location = new Point(27, 917);
             txtColor.Name = "txtColor";
             txtColor.Size = new Size(252, 37);
             txtColor.TabIndex = 7;
@@ -537,7 +537,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = Color.White;
-            label4.Location = new Point(29, 511);
+            label4.Location = new Point(29, 886);
             label4.Name = "label4";
             label4.Size = new Size(60, 28);
             label4.TabIndex = 6;
@@ -546,7 +546,7 @@
             // txtManufacture
             // 
             txtManufacture.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtManufacture.Location = new Point(27, 469);
+            txtManufacture.Location = new Point(27, 542);
             txtManufacture.Name = "txtManufacture";
             txtManufacture.Size = new Size(252, 37);
             txtManufacture.TabIndex = 5;
@@ -556,7 +556,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.ForeColor = Color.White;
-            label3.Location = new Point(29, 438);
+            label3.Location = new Point(29, 511);
             label3.Name = "label3";
             label3.Size = new Size(163, 28);
             label3.TabIndex = 4;
@@ -565,7 +565,7 @@
             // txtCarModel
             // 
             txtCarModel.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCarModel.Location = new Point(27, 395);
+            txtCarModel.Location = new Point(27, 469);
             txtCarModel.Name = "txtCarModel";
             txtCarModel.Size = new Size(252, 37);
             txtCarModel.TabIndex = 3;
@@ -575,7 +575,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.White;
-            label2.Location = new Point(29, 364);
+            label2.Location = new Point(29, 438);
             label2.Name = "label2";
             label2.Size = new Size(103, 28);
             label2.TabIndex = 2;
@@ -728,14 +728,14 @@
             tableCarView.BorderStyle = BorderStyle.None;
             tableCarView.CellBorderStyle = DataGridViewCellBorderStyle.RaisedHorizontal;
             tableCarView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            tableCarView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             tableCarView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableCarView.EnableHeadersVisualStyles = false;
             tableCarView.Location = new Point(24, 33);

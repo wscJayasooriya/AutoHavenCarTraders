@@ -120,27 +120,27 @@ namespace CarTraders.Views
                     }
                     if (a)
                     {
-                        if (dataGridView.Columns.Contains("Approve"))
+                        if (dataGridView.Columns.Contains("Action"))
                         {
-                            dataGridView.Columns["Approve"].Visible = false;
+                            dataGridView.Columns["Action"].Visible = false;
                         }
                     }
                     else
                     {
-                        if (!dataGridView.Columns.Contains("Approve"))
+                        if (!dataGridView.Columns.Contains("Action"))
                         {
                             DataGridViewButtonColumn approveButtonColumn = new DataGridViewButtonColumn
                             {
-                                Name = "Approve",
-                                HeaderText = "Approve",
-                                Text = "Approve",
+                                Name = "Action",
+                                HeaderText = "Action",
+                                Text = "Action",
                                 UseColumnTextForButtonValue = true
                             };
                             dataGridView.Columns.Add(approveButtonColumn);
                         }
                         else
                         {
-                            dataGridView.Columns["Approve"].Visible = true; // Ensure the column is visible if 'a' is false
+                            dataGridView.Columns["Action"].Visible = true; // Ensure the column is visible if 'a' is false
                         }
                     }
 
@@ -228,7 +228,7 @@ namespace CarTraders.Views
 
             dataGridView.CellFormatting += (sender, e) =>
             {
-                if (e.ColumnIndex == dataGridView.Columns["Approve"].Index && e.RowIndex >= 0)
+                if (e.ColumnIndex == dataGridView.Columns["Action"].Index && e.RowIndex >= 0)
                 {
                     DataGridViewButtonCell? buttonCell = dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewButtonCell;
                     if (buttonCell != null)
@@ -266,7 +266,7 @@ namespace CarTraders.Views
                 view_Order.Show();
             }
 
-            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView.Columns["Approve"].Index)
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView.Columns["Action"].Index)
             {
                 // Extract OrderCode from the row
                 var row = dataGridView.Rows[e.RowIndex];

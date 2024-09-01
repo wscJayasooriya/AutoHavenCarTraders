@@ -48,6 +48,10 @@
             label1 = new Label();
             pictureBox1 = new PictureBox();
             CountTimer = new System.Windows.Forms.Timer(components);
+            panel5 = new Panel();
+            label5 = new Label();
+            label3 = new Label();
+            label2 = new Label();
             panelMain.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -57,10 +61,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panelMain
             // 
+            panelMain.Controls.Add(panel5);
             panelMain.Controls.Add(panel4);
             panelMain.Controls.Add(panel3);
             panelMain.Controls.Add(panel2);
@@ -242,6 +248,47 @@
             // 
             CountTimer.Tick += CountTimer_Tick;
             // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.ActiveBorder;
+            panel5.Controls.Add(label5);
+            panel5.Controls.Add(label3);
+            panel5.Controls.Add(label2);
+            panel5.Location = new Point(181, 311);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(1274, 455);
+            panel5.TabIndex = 12;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(124, 295);
+            label5.Name = "label5";
+            label5.Size = new Size(1026, 96);
+            label5.TabIndex = 14;
+            label5.Text = "ABC Car and Car Part Traders";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(420, 177);
+            label3.Name = "label3";
+            label3.Size = new Size(445, 96);
+            label3.TabIndex = 13;
+            label3.Text = "Welcome to";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(293, 63);
+            label2.Name = "label2";
+            label2.Size = new Size(711, 96);
+            label2.TabIndex = 12;
+            label2.Text = "Sandun Jayasooriya";
+            // 
             // Form_Customer_Dashboard
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -266,6 +313,8 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -289,5 +338,9 @@
         private Label label1;
         private PictureBox pictureBox1;
         private System.Windows.Forms.Timer CountTimer;
+        private Panel panel5;
+        private Label label5;
+        private Label label3;
+        private Label label2;
     }
 }
