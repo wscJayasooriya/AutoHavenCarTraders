@@ -64,7 +64,7 @@ namespace CarTraders.Helpers
             }
             catch (Exception ex)
             {
-                NotificationUtil.ShowNotification(NotificationType.ERROR, "Failed to send OTP email: " + ex.Message);
+                NotificationUtil.ShowNotification(NotificationType.ERROR, "Failed to send email: " + ex.Message);
             }
         }
     }

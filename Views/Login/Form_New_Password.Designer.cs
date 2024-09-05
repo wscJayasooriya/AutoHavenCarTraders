@@ -40,6 +40,7 @@
             label3 = new Label();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            btnClose = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -57,6 +58,7 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(btnClose);
             panel1.Controls.Add(btnCancel);
             panel1.Controls.Add(btnConfirm);
             panel1.Controls.Add(txtConfirmPassword);
@@ -171,6 +173,21 @@
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.Red;
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(756, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(41, 40);
+            btnClose.TabIndex = 12;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
             // Form_New_Password
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -200,5 +217,6 @@
         private Button btnConfirm;
         private TextBox txtConfirmPassword;
         private Button btnCancel;
+        private Button btnClose;
     }
 }

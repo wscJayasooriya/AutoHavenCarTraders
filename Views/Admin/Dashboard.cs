@@ -363,6 +363,7 @@ namespace CarTraders
                 viewOrdersNav.BackColor = Color.FromArgb(52, 73, 94);
                 OpenChildForm(new Form_Users(currentUser));
             }
+
         }
 
         private void logoutNav_Click(object sender, EventArgs e)

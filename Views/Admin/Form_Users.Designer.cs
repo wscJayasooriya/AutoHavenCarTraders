@@ -471,7 +471,6 @@
             TLPanelTop.Controls.Add(btnAdd, 0, 0);
             TLPanelTop.Controls.Add(panel1, 4, 0);
             TLPanelTop.Dock = DockStyle.Top;
-            TLPanelTop.Enabled = false;
             TLPanelTop.Location = new Point(0, 0);
             TLPanelTop.Name = "TLPanelTop";
             TLPanelTop.Padding = new Padding(2);

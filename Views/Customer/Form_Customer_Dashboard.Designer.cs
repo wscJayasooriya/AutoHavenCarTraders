@@ -31,6 +31,10 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Customer_Dashboard));
             panelMain = new Panel();
+            panel5 = new Panel();
+            label5 = new Label();
+            label3 = new Label();
+            lableUsername = new Label();
             panel4 = new Panel();
             labelPendingOrderCount = new Label();
             label8 = new Label();
@@ -48,11 +52,8 @@
             label1 = new Label();
             pictureBox1 = new PictureBox();
             CountTimer = new System.Windows.Forms.Timer(components);
-            panel5 = new Panel();
-            label5 = new Label();
-            label3 = new Label();
-            label2 = new Label();
             panelMain.SuspendLayout();
+            panel5.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel3.SuspendLayout();
@@ -61,7 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panelMain
@@ -76,6 +76,46 @@
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(1575, 830);
             panelMain.TabIndex = 0;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.ActiveBorder;
+            panel5.Controls.Add(label5);
+            panel5.Controls.Add(label3);
+            panel5.Controls.Add(lableUsername);
+            panel5.Location = new Point(181, 311);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(1274, 455);
+            panel5.TabIndex = 12;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(124, 295);
+            label5.Name = "label5";
+            label5.Size = new Size(1026, 96);
+            label5.TabIndex = 14;
+            label5.Text = "ABC Car and Car Part Traders";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(420, 177);
+            label3.Name = "label3";
+            label3.Size = new Size(445, 96);
+            label3.TabIndex = 13;
+            label3.Text = "Welcome to";
+            // 
+            // lableUsername
+            // 
+            lableUsername.AutoSize = true;
+            lableUsername.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lableUsername.Location = new Point(293, 63);
+            lableUsername.Name = "lableUsername";
+            lableUsername.Size = new Size(0, 96);
+            lableUsername.TabIndex = 12;
             // 
             // panel4
             // 
@@ -94,9 +134,9 @@
             labelPendingOrderCount.Font = new Font("Sitka Small", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelPendingOrderCount.Location = new Point(159, 62);
             labelPendingOrderCount.Name = "labelPendingOrderCount";
-            labelPendingOrderCount.Size = new Size(85, 63);
+            labelPendingOrderCount.Size = new Size(87, 63);
             labelPendingOrderCount.TabIndex = 3;
-            labelPendingOrderCount.Text = "20";
+            labelPendingOrderCount.Text = "00";
             // 
             // label8
             // 
@@ -135,9 +175,9 @@
             labelCarPartCount.Font = new Font("Sitka Small", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelCarPartCount.Location = new Point(159, 62);
             labelCarPartCount.Name = "labelCarPartCount";
-            labelCarPartCount.Size = new Size(85, 63);
+            labelCarPartCount.Size = new Size(87, 63);
             labelCarPartCount.TabIndex = 3;
-            labelCarPartCount.Text = "20";
+            labelCarPartCount.Text = "00";
             labelCarPartCount.Visible = false;
             // 
             // label6
@@ -177,9 +217,9 @@
             labelCarCount.Font = new Font("Sitka Small", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelCarCount.Location = new Point(159, 62);
             labelCarCount.Name = "labelCarCount";
-            labelCarCount.Size = new Size(85, 63);
+            labelCarCount.Size = new Size(87, 63);
             labelCarCount.TabIndex = 3;
-            labelCarCount.Text = "20";
+            labelCarCount.Text = "00";
             labelCarCount.Visible = false;
             // 
             // label4
@@ -219,10 +259,9 @@
             labelCompleteOrders.Font = new Font("Sitka Small", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelCompleteOrders.Location = new Point(159, 62);
             labelCompleteOrders.Name = "labelCompleteOrders";
-            labelCompleteOrders.Size = new Size(85, 63);
+            labelCompleteOrders.Size = new Size(87, 63);
             labelCompleteOrders.TabIndex = 3;
-            labelCompleteOrders.Text = "20";
-            labelCompleteOrders.Visible = false;
+            labelCompleteOrders.Text = "00";
             // 
             // label1
             // 
@@ -248,47 +287,6 @@
             // 
             CountTimer.Tick += CountTimer_Tick;
             // 
-            // panel5
-            // 
-            panel5.BackColor = SystemColors.ActiveBorder;
-            panel5.Controls.Add(label5);
-            panel5.Controls.Add(label3);
-            panel5.Controls.Add(label2);
-            panel5.Location = new Point(181, 311);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(1274, 455);
-            panel5.TabIndex = 12;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(124, 295);
-            label5.Name = "label5";
-            label5.Size = new Size(1026, 96);
-            label5.TabIndex = 14;
-            label5.Text = "ABC Car and Car Part Traders";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(420, 177);
-            label3.Name = "label3";
-            label3.Size = new Size(445, 96);
-            label3.TabIndex = 13;
-            label3.Text = "Welcome to";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(293, 63);
-            label2.Name = "label2";
-            label2.Size = new Size(711, 96);
-            label2.TabIndex = 12;
-            label2.Text = "Sandun Jayasooriya";
-            // 
             // Form_Customer_Dashboard
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -301,6 +299,8 @@
             Text = "Form_Customer_Dashboard";
             Load += Form_Customer_Dashboard_Load;
             panelMain.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -313,8 +313,6 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -341,6 +339,6 @@
         private Panel panel5;
         private Label label5;
         private Label label3;
-        private Label label2;
+        private Label lableUsername;
     }
 }

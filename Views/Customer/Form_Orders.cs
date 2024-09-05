@@ -33,6 +33,7 @@ namespace CarTraders
         private List<CarParts> carParts = new List<CarParts>();
         private CodeGenerateUtil generateUtil;
         public string currentUser;
+        private bool isCarPartsMode = false;
         public Form_Orders(string username)
         {
             InitializeComponent();
@@ -54,6 +55,7 @@ namespace CarTraders
 
         private void btnCar_Click(object sender, EventArgs e)
         {
+            isCarPartsMode = false;
             carPartPanel.Controls.Clear();
             btnCar.BackColor = Color.FromArgb(33, 97, 140);
             btnCarParts.BackColor = Color.FromArgb(23, 32, 42);
@@ -65,7 +67,7 @@ namespace CarTraders
             {
 
                 var cars = dbContext.cars
-                    .Where(c => c.Status == 1 && c.IsDeleted == 0)
+                    .Where(c => c.IsDeleted == 0)
                     .ToList();
 
                 loadPanel.Controls.Clear();
@@ -98,7 +100,6 @@ namespace CarTraders
                     pictureBox.Size = new Size(cardWidth - 20, 160);
                     pictureBox.Location = new Point(10, 10);
 
-                    // Create Label for the car model
                     Label labelCarModel = new Label();
                     labelCarModel.Text = car.CarModel;
                     labelCarModel.Location = new Point(10, 180);
@@ -106,16 +107,13 @@ namespace CarTraders
                     labelCarModel.Font = new Font("Arial", 10, FontStyle.Bold);
                     labelCarModel.ForeColor = Color.Black;
 
-                    // Create Label for the car price
                     Label labelPrice = new Label();
                     labelPrice.Text = "RS " + car.Price.ToString() + ".00";
-                    // Assuming Price is a decimal type
                     labelPrice.Location = new Point(10, 210);
                     labelPrice.AutoSize = true;
                     labelPrice.Font = new Font("Arial", 10, FontStyle.Bold);
                     labelPrice.ForeColor = Color.Green;
 
-                    // Create "View Details" Button
                     Button btnViewDetails = new Button();
                     btnViewDetails.Text = "View";
                     btnViewDetails.Size = new Size(100, 30);
@@ -131,7 +129,7 @@ namespace CarTraders
 
 
 
-                    // Create "Add to Cart" Button
+                    // Create "Buy" Button
                     Button btnAddToCart = new Button();
                     btnAddToCart.Text = "Buy";
                     btnAddToCart.Size = new Size(100, 30);
@@ -273,6 +271,7 @@ namespace CarTraders
 
         private void btnCarParts_Click(object sender, EventArgs e)
         {
+            isCarPartsMode = true;
             carPartPanel.Controls.Clear();
             btnCar.BackColor = Color.FromArgb(23, 32, 42);
             btnCarParts.BackColor = Color.FromArgb(33, 97, 140);
@@ -283,7 +282,7 @@ namespace CarTraders
             using (var dbContext = new ApplicationDBContext())
             {
                 var carPartQuery = dbContext.carParts
-                    .Where(cp => cp.Status == 1 && cp.Quantity > 0 && cp.IsDeleted == 0);
+                    .Where(cp => cp.Quantity > 0 && cp.IsDeleted == 0);
                 var carPartsList = carPartQuery.ToList();
                 carParts = carPartsList;
 
@@ -427,7 +426,6 @@ namespace CarTraders
             detailsPanel.Location = new Point(20, 20);
             detailsPanel.BorderStyle = BorderStyle.FixedSingle;
 
-            // Create PictureBox for the car part image
             PictureBox pictureBox = new PictureBox();
             try
             {
@@ -526,7 +524,6 @@ namespace CarTraders
             // Clear existing controls from the cartPanel
             carPartPanel.Controls.Clear();
             cartPanel.BorderStyle = BorderStyle.FixedSingle;
-            // Create a PictureBox for the car image
             PictureBox pictureBox = new PictureBox();
             try
             {
@@ -541,7 +538,6 @@ namespace CarTraders
             pictureBox.Size = new Size(carPartPanel.Width - 20, 200);
             pictureBox.Location = new Point(10, 10);
 
-            // Create Label for the car model
             Label labelCarModel = new Label();
             labelCarModel.Text = car.CarModel;
             labelCarModel.Location = new Point(10, 220);
@@ -549,7 +545,6 @@ namespace CarTraders
             labelCarModel.Font = new Font("Arial", 12, FontStyle.Bold);
             labelCarModel.ForeColor = Color.Black;
 
-            // Create Label for the car manufacture
             Label labelManufacture = new Label();
             labelManufacture.Text = "Manufacture Year : " + car.ManufactureYear;
             labelManufacture.Location = new Point(10, 260);
@@ -557,7 +552,6 @@ namespace CarTraders
             labelManufacture.Font = new Font("Arial", 10, FontStyle.Regular);
             labelManufacture.ForeColor = Color.Black;
 
-            // Create Label for the car color
             Label labelColor = new Label();
             labelColor.Text = "Color : " + car.Color;
             labelColor.Location = new Point(10, 300);
@@ -565,7 +559,6 @@ namespace CarTraders
             labelColor.Font = new Font("Arial", 10, FontStyle.Regular);
             labelColor.ForeColor = Color.Black;
 
-            // Create Label for the car fuel type
             Label labelFuel = new Label();
             labelFuel.Text = "Fuel Type : " + car.FuelType;
             labelFuel.Location = new Point(10, 340);
@@ -573,7 +566,6 @@ namespace CarTraders
             labelFuel.Font = new Font("Arial", 10, FontStyle.Regular);
             labelFuel.ForeColor = Color.Black;
 
-            // Create Label for the car transmission
             Label labelTrans = new Label();
             labelTrans.Text = "Transmission : " + car.Transmission;
             labelTrans.Location = new Point(10, 380);
@@ -581,7 +573,6 @@ namespace CarTraders
             labelTrans.Font = new Font("Arial", 10, FontStyle.Regular);
             labelTrans.ForeColor = Color.Black;
 
-            // Create Label for the car price
             Label labelPrice = new Label();
             labelPrice.Text = "LKR " + car.Price.ToString() + ".00";
             labelPrice.Location = new Point(10, 420);
@@ -589,7 +580,6 @@ namespace CarTraders
             labelPrice.Font = new Font("Arial", 14, FontStyle.Bold);
             labelPrice.ForeColor = Color.Green;
 
-            // Add controls to the cartPartPanel
             carPartPanel.Controls.Add(pictureBox);
             carPartPanel.Controls.Add(labelCarModel);
             carPartPanel.Controls.Add(labelManufacture);
@@ -803,6 +793,223 @@ namespace CarTraders
             form_Checkout.Show();
         }
 
+        private void searchBox_Click(object sender, EventArgs e)
+        {
+            string searchTerm = txtSearch.Text.Trim().ToLower();
+
+            using (var dbContext = new ApplicationDBContext())
+            {
+                if (isCarPartsMode)
+                {
+                    // Search for car parts
+                    var carParts = dbContext.carParts
+                        .Where(cp => cp.IsDeleted == 0 && cp.Quantity > 0 && cp.PartName.ToLower().Contains(searchTerm))
+                        .ToList();
+
+                    loadPanel.Controls.Clear();
+                    int yPos = 10;
+                    int xPos = 10;
+                    int cardWidth = 250;
+                    int cardHeight = 350;
+                    int padding = 15;
+
+                    foreach (var part in carParts)
+                    {
+                        // Create a Panel to act as the card for car parts
+                        Panel card = new Panel
+                        {
+                            Size = new Size(cardWidth, cardHeight),
+                            Location = new Point(xPos, yPos),
+                            BackColor = Color.FromArgb(236, 240, 241)
+                        };
+
+                        PictureBox pictureBox = new PictureBox
+                        {
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            Size = new Size(cardWidth - 20, 160),
+                            Location = new Point(10, 10)
+                        };
+                        try
+                        {
+                            pictureBox.Image = ByteArrayToImage(part.Image);
+                        }
+                        catch (Exception ex)
+                        {
+                            NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {part.PartName}: {ex.Message}");
+                            pictureBox.Image = null;
+                        }
+
+                        Label labelPartName = new Label
+                        {
+                            Text = part.PartName,
+                            Location = new Point(10, 180),
+                            AutoSize = true,
+                            Font = new Font("Arial", 10, FontStyle.Bold),
+                            ForeColor = Color.Black
+                        };
+
+                        Label labelPrice = new Label
+                        {
+                            Text = "RS " + part.Price.ToString() + ".00",
+                            Location = new Point(10, 210),
+                            AutoSize = true,
+                            Font = new Font("Arial", 10, FontStyle.Bold),
+                            ForeColor = Color.Green
+                        };
+
+                        Button btnViewDetails = new Button
+                        {
+                            Text = "View",
+                            Size = new Size(100, 30),
+                            Location = new Point(10, 250),
+                            FlatStyle = FlatStyle.Flat,
+                            BackColor = Color.FromArgb(52, 152, 219),
+                            ForeColor = Color.White,
+                            Font = new Font("Arial", 9, FontStyle.Bold)
+                        };
+                        btnViewDetails.Click += (s, args) => { DisplayCarPartDetails(part); };
+
+                        Button btnAddToCart = new Button
+                        {
+                            Text = "Add Cart",
+                            Size = new Size(100, 30),
+                            Location = new Point(140, 250),
+                            FlatStyle = FlatStyle.Flat,
+                            BackColor = Color.DarkOrange,
+                            ForeColor = Color.White,
+                            Font = new Font("Arial", 9, FontStyle.Bold)
+                        };
+                        btnAddToCart.Click += (s, args) => { DisplayCarPartInCartPanel(part); };
+
+                        card.Controls.Add(pictureBox);
+                        card.Controls.Add(labelPartName);
+                        card.Controls.Add(labelPrice);
+                        card.Controls.Add(btnViewDetails);
+                        card.Controls.Add(btnAddToCart);
+
+                        loadPanel.Controls.Add(card);
+
+                        xPos += cardWidth + padding;
+                        if (xPos + cardWidth > loadPanel.Width)
+                        {
+                            xPos = 10;
+                            yPos += cardHeight + padding;
+                        }
+                    }
+                }
+                else
+                {
+                    // Search for cars
+                    var cars = dbContext.cars
+                        .Where(c => c.IsDeleted == 0 && c.CarModel.ToLower().Contains(searchTerm))
+                        .ToList();
+
+                    loadPanel.Controls.Clear();
+                    int yPos = 10;
+                    int xPos = 10;
+                    int cardWidth = 250;
+                    int cardHeight = 350;
+                    int padding = 15;
+
+                    foreach (var car in cars)
+                    {
+                        // Create a Panel to act as the card for cars
+                        Panel card = new Panel
+                        {
+                            Size = new Size(cardWidth, cardHeight),
+                            Location = new Point(xPos, yPos),
+                            BackColor = Color.FromArgb(236, 240, 241)
+                        };
+
+                        PictureBox pictureBox = new PictureBox
+                        {
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            Size = new Size(cardWidth - 20, 160),
+                            Location = new Point(10, 10)
+                        };
+                        try
+                        {
+                            pictureBox.Image = ByteArrayToImage(car.Image);
+                        }
+                        catch (Exception ex)
+                        {
+                            NotificationUtil.ShowNotification(NotificationType.ERROR, "Image Load Error: " + $"Error loading image for {car.CarModel}: {ex.Message}");
+                            pictureBox.Image = null;
+                        }
+
+                        Label labelCarModel = new Label
+                        {
+                            Text = car.CarModel,
+                            Location = new Point(10, 180),
+                            AutoSize = true,
+                            Font = new Font("Arial", 10, FontStyle.Bold),
+                            ForeColor = Color.Black
+                        };
+
+                        Label labelPrice = new Label
+                        {
+                            Text = "RS " + car.Price.ToString() + ".00",
+                            Location = new Point(10, 210),
+                            AutoSize = true,
+                            Font = new Font("Arial", 10, FontStyle.Bold),
+                            ForeColor = Color.Green
+                        };
+
+                        Button btnViewDetails = new Button
+                        {
+                            Text = "View",
+                            Size = new Size(100, 30),
+                            Location = new Point(10, 250),
+                            FlatStyle = FlatStyle.Flat,
+                            BackColor = Color.FromArgb(52, 152, 219),
+                            ForeColor = Color.White,
+                            Font = new Font("Arial", 9, FontStyle.Bold)
+                        };
+                        btnViewDetails.Click += (s, args) => { DisplayCarDetails(car); };
+
+                        Button btnAddToCart = new Button
+                        {
+                            Text = "Buy",
+                            Size = new Size(100, 30),
+                            Location = new Point(140, 250),
+                            FlatStyle = FlatStyle.Flat,
+                            BackColor = Color.DarkOrange,
+                            ForeColor = Color.White,
+                            Font = new Font("Arial", 9, FontStyle.Bold)
+                        };
+                        btnAddToCart.Click += (s, args) => { DisplayCarInCartPanel(car); };
+
+                        card.Controls.Add(pictureBox);
+                        card.Controls.Add(labelCarModel);
+                        card.Controls.Add(labelPrice);
+                        card.Controls.Add(btnViewDetails);
+                        card.Controls.Add(btnAddToCart);
+
+                        loadPanel.Controls.Add(card);
+
+                        xPos += cardWidth + padding;
+                        if (xPos + cardWidth > loadPanel.Width)
+                        {
+                            xPos = 10;
+                            yPos += cardHeight + padding;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            txtSearch.Clear();
+            if (isCarPartsMode)
+            {
+                btnCarParts_Click(sender, e);
+            }
+            else
+            {
+                btnCar_Click(sender, e);
+            }
+        }
     }
 
 

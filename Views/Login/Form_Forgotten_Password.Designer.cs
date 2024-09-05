@@ -37,6 +37,7 @@
             label2 = new Label();
             label1 = new Label();
             pictureBox1 = new PictureBox();
+            btnClose = new Button();
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -44,6 +45,7 @@
             // panelMain
             // 
             panelMain.BackColor = Color.White;
+            panelMain.Controls.Add(btnClose);
             panelMain.Controls.Add(btnSendOtp);
             panelMain.Controls.Add(label4);
             panelMain.Controls.Add(txtEmail);
@@ -135,6 +137,21 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.Red;
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(959, 2);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(41, 40);
+            btnClose.TabIndex = 12;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
             // Form_Forgotten_Password
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -161,5 +178,6 @@
         private Label label3;
         private Label label2;
         private Button btnSendOtp;
+        private Button btnClose;
     }
 }

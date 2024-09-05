@@ -47,12 +47,14 @@
             label2 = new Label();
             label1 = new Label();
             countdownTimer = new System.Windows.Forms.Timer(components);
+            btnClose = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnClose);
             panel1.Controls.Add(labelResendOTP);
             panel1.Controls.Add(labelCountdown);
             panel1.Controls.Add(txtOtp6);
@@ -246,6 +248,21 @@
             // 
             countdownTimer.Interval = 1000;
             // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.Red;
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(756, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(41, 40);
+            btnClose.TabIndex = 15;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
             // Form_OTP
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -281,5 +298,6 @@
         private System.Windows.Forms.Timer countdownTimer;
         private Label labelCountdown;
         private Label labelResendOTP;
+        private Button btnClose;
     }
 }

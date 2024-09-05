@@ -92,7 +92,7 @@ namespace CarTraders.Helpers
                 IsRightToLeft = false,
                 ShowCloseButton = false,
                 ShowGrip = false,
-                Delay = 5000,
+                Delay = 3000,
                 AnimationDuration = 500,
                 Scroll = false
             };

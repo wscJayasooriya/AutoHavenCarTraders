@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Orders));
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
-            pictureBox1 = new PictureBox();
+            searchBox = new PictureBox();
             panel2 = new Panel();
-            textBox1 = new TextBox();
+            txtSearch = new TextBox();
             container = new SplitContainer();
             loadPanel = new Panel();
             cartPanel = new Panel();
@@ -42,9 +42,10 @@
             carPartPanel = new Panel();
             btnCar = new Button();
             btnCarParts = new Button();
+            btnRefresh = new Button();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)searchBox).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)container).BeginInit();
             container.Panel1.SuspendLayout();
@@ -75,43 +76,45 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(52, 73, 94);
-            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(btnRefresh);
+            panel1.Controls.Add(searchBox);
             panel1.Controls.Add(panel2);
             panel1.Location = new Point(5, 5);
             panel1.Name = "panel1";
             panel1.Size = new Size(1565, 80);
             panel1.TabIndex = 4;
             // 
-            // pictureBox1
+            // searchBox
             // 
-            pictureBox1.Cursor = Cursors.Hand;
-            pictureBox1.ErrorImage = null;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(1010, 13);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(55, 55);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 10;
-            pictureBox1.TabStop = false;
+            searchBox.Cursor = Cursors.Hand;
+            searchBox.ErrorImage = null;
+            searchBox.Image = (Image)resources.GetObject("searchBox.Image");
+            searchBox.Location = new Point(1024, 13);
+            searchBox.Name = "searchBox";
+            searchBox.Size = new Size(55, 55);
+            searchBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            searchBox.TabIndex = 10;
+            searchBox.TabStop = false;
+            searchBox.Click += searchBox_Click;
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(txtSearch);
             panel2.Location = new Point(588, 13);
             panel2.Name = "panel2";
             panel2.Size = new Size(433, 55);
             panel2.TabIndex = 9;
             // 
-            // textBox1
+            // txtSearch
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(7, 9);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(423, 40);
-            textBox1.TabIndex = 6;
+            txtSearch.BorderStyle = BorderStyle.None;
+            txtSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(7, 9);
+            txtSearch.Multiline = true;
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(423, 40);
+            txtSearch.TabIndex = 6;
             // 
             // container
             // 
@@ -213,6 +216,23 @@
             btnCarParts.UseVisualStyleBackColor = false;
             btnCarParts.Click += btnCarParts_Click;
             // 
+            // btnRefresh
+            // 
+            btnRefresh.BackColor = Color.Teal;
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Image = (Image)resources.GetObject("btnRefresh.Image");
+            btnRefresh.Location = new Point(7, 9);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(78, 61);
+            btnRefresh.TabIndex = 11;
+            btnRefresh.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
+            // 
             // Form_Orders
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -230,7 +250,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)searchBox).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             container.Panel1.ResumeLayout(false);
@@ -245,9 +265,9 @@
 
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel1;
-        private PictureBox pictureBox1;
+        private PictureBox searchBox;
         private Panel panel2;
-        private TextBox textBox1;
+        private TextBox txtSearch;
         private SplitContainer container;
         private Panel loadPanel;
         private Panel cartPanel;
@@ -256,5 +276,6 @@
         private Panel carPartPanel;
         private Button btnPartClear;
         private Button btnPartPlaceOrder;
+        private Button btnRefresh;
     }
 }

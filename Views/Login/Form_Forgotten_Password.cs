@@ -61,5 +61,10 @@ namespace CarTraders
                 NotificationUtil.ShowNotification(NotificationType.ERROR, "An error occurred while checking the email: " + ex.Message);
             }
         }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

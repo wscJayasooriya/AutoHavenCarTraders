@@ -246,6 +246,12 @@ namespace CarTraders
             {
                 using (var dbContext = new ApplicationDBContext())
                 {
+                    if (dbContext.users.Any(u => u.Email == email))
+                    {
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Email already exists in the database.");
+                        return;
+                    }
+
                     var userRole = "Customer_Role";
                     var userCode = generateUtil.GetNextUserCode(userRole);
                     var user = new Users

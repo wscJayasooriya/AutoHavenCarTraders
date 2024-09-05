@@ -406,7 +406,7 @@ namespace CarTraders
             // Remove Button 
             if (e.ColumnIndex == tableUserView.Columns["Remove"].Index && e.RowIndex >= 0)
             {
-                var result = MessageBox.Show("Are you sure you want to remove this customer?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var result = MessageBox.Show("Are you sure you want to remove this user?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result != DialogResult.Yes) return;
 
                 if (Guid.TryParse(tableUserView.Rows[e.RowIndex].Cells["Id"].Value.ToString(), out Guid userGuid))
@@ -593,6 +593,12 @@ namespace CarTraders
             {
                 using (var dbContext = new ApplicationDBContext())
                 {
+                    if (dbContext.users.Any(u => u.Email == email))
+                    {
+                        NotificationUtil.ShowNotification(NotificationType.ERROR, "Email already exists in the database.");
+                        return;
+                    }
+
                     var userRole = "User_Role";
                     var userCode = generateUtil.GetNextUserCode(userRole);
                     var user = new Users

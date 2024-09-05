@@ -49,6 +49,7 @@
             panel3 = new Panel();
             label4 = new Label();
             BtnRegister = new Button();
+            btnClose = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -91,6 +92,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(btnClose);
             panel2.Controls.Add(groupBox1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(447, 5);
@@ -283,6 +285,21 @@
             BtnRegister.UseVisualStyleBackColor = false;
             BtnRegister.Click += BtnRegister_Click;
             // 
+            // btnClose
+            // 
+            btnClose.BackColor = Color.Red;
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.FlatStyle = FlatStyle.Flat;
+            btnClose.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClose.ForeColor = Color.White;
+            btnClose.Location = new Point(729, 3);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(41, 40);
+            btnClose.TabIndex = 11;
+            btnClose.Text = "X";
+            btnClose.UseVisualStyleBackColor = false;
+            btnClose.Click += btnClose_Click;
+            // 
             // Signup
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -326,5 +343,6 @@
         private Panel panel6;
         private Label label3;
         private Label label2;
+        private Button btnClose;
     }
 }

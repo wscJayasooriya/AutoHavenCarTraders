@@ -79,6 +79,7 @@ namespace CarTraders.Views.Customer
             {
                 var user = context.users.FirstOrDefault(u => u.Username == currentUser);
 
+                lableUsername.Text = user.FirstName + " " + user.LastName;
                 activeOrderCount = context.orderDetails.Count(o => o.CustomerCode == user.UserCode && o.Is_active == 1 && o.IsApproved == 1);
                 activeCarCount = context.cars.Count(c => c.Status == 1 && c.IsDeleted == 0);
                 activeCarPartCount = context.carParts.Count(c => c.Status == 1 && c.Quantity > 0 && c.IsDeleted == 0);
